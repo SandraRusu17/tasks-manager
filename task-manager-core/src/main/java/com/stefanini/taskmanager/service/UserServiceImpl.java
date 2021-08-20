@@ -1,6 +1,7 @@
 package com.stefanini.taskmanager.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.stefanini.taskmanager.entity.Task;
 import com.stefanini.taskmanager.entity.User;
@@ -64,5 +65,11 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUsers() {
         logger.debug("Entered getAllUsers");
         return userRepository.findAll();
+    }
+
+    @Override
+    public Optional<User> findByUsername(String username){
+        logger.info("Entered findByUsername with username = {}", username);
+       return this.userRepository.findByUsername(username);
     }
 }

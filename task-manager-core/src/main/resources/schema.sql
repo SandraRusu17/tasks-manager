@@ -11,19 +11,11 @@ CREATE TABLE `taskmanager`.`users` (
  -- -----------------------------------------------------
  -- Table `taskmanager`.`tasks`
  -- -----------------------------------------------------
-CREATE TABLE `taskmanager`.`tasks` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(256) NULL,
-  `description` VARCHAR(256) NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `book_id`
-    FOREIGN KEY (`id`)
-    REFERENCES `taskmanager`.`users` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
-
-     -- -----------------------------------------------------
-    ALTER TABLE `taskmanager`.`users`
-    CHANGE COLUMN `id` `id` INT NOT NULL AUTO_INCREMENT ;
-
-     -- -----------------------------------------------------
+CREATE TABLE tasks(
+    id INT NOT NULL AUTO_INCREMENT,
+    title VARCHAR(256) NOT NULL,
+    description VARCHAR(256) NOT NULL,
+    user_id int,
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);

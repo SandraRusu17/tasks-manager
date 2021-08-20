@@ -16,6 +16,11 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
+
+    public User(String userName) {
+        this.userName = userName;
+    }
+
     private String userName;
     private String firstName;
     private String lastName;

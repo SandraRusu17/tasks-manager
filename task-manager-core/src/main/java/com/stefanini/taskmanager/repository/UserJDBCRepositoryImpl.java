@@ -1,5 +1,6 @@
 package com.stefanini.taskmanager.repository;
 
+import com.stefanini.taskmanager.entity.Task;
 import com.stefanini.taskmanager.entity.User;
 
 import java.sql.*;
@@ -60,26 +61,61 @@ public class UserJDBCRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<User> findByUsername(String username) {
-        return Optional.empty();
+
+//        User user = null;
+        Optional<User> user;
+        try (Connection connection = DriverManager.getConnection(URL + DATABASE, USERNAME, PASSWORD);
+             PreparedStatement ps = connection.prepareStatement(FIND_BY_USERNAME)) {
+
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                user = Optional.of(new User(rs.getLong("id"),
+                        rs.getString("firstName"),
+                        rs.getString("lastName"),
+                        rs.getString("userName")));
+
+                return user;
+            } else {
+                return Optional.empty();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
-        try(Connection connection = DriverManager.getConnection(URL + DATABASE, USERNAME, PASSWORD);
-            PreparedStatement ps = connection.prepareStatement(FIND_ALL)) {
+        try (Connection connection = DriverManager.getConnection(URL + DATABASE, USERNAME, PASSWORD);
+             PreparedStatement ps1 = connection.prepareStatement(FIND_ALL);
+             PreparedStatement ps2 = connection.prepareStatement("SELECT * FROM tasks WHERE user_id = ?")) {
 
-            try(ResultSet r = ps.executeQuery()) {
+            try (ResultSet r = ps1.executeQuery()) {
                 while (r.next()) {
                     User user = new User(r.getLong("id"),
-                                        r.getString("firstName"),
-                                        r.getString("lastName"),
-                                        r.getString("userName"));
+                            r.getString("firstName"),
+                            r.getString("lastName"),
+                            r.getString("userName"));
                     users.add(user);
                 }
             }
 
-        }catch (SQLException e) {
+            for (User user : users) {
+                ps2.setLong(1, user.getId());
+                try (ResultSet r2 = ps2.executeQuery()) {
+                    while (r2.next()) {
+                        Task task = new Task(r2.getLong("id"),
+                                r2.getString("title"),
+                                r2.getString("description"));
+                        user.addTask(task);
+                    }
+
+                }
+            }
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return users;
@@ -87,6 +123,7 @@ public class UserJDBCRepositoryImpl implements UserRepository {
 
     @Override
     public void update(User user) {
+
 
     }
 
