@@ -14,9 +14,10 @@ public class App {
     public static void main(String[] args) {
         UserService userService = ServiceFactory.getInstance().getUserService();
 
-        String username = "bbb";
+        String username = "aaaa";
         Optional<User> userByUsername = userService.findByUsername(username);
-        System.out.println(userByUsername);
+        userByUsername.ifPresent(System.out::println);
+
 
 //        User user = new User("qqqq","wwwww","eee");
 //        userService.saveUser(user);
