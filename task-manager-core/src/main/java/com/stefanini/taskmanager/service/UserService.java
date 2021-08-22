@@ -12,12 +12,8 @@ public interface UserService {
 
     Optional<User> findByUsername(String username);
 
-    void addTaskFor(Long id, String taskTitle, String taskDescription, String username) throws UserNotFoundException;
-
-    List<Task> getTasksFor(String username) throws UserNotFoundException;
-
     //one more logical feature
-    void deleteTaskByTitleFor(String taskTitle, String username) throws UserNotFoundException;
+    int deleteUserById(Long id) throws UserNotFoundException;
 
     List<User> getAllUsers();
 }

@@ -15,17 +15,17 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+
     private Long id;
-
-    public User(String userName) {
-        this.userName = userName;
-    }
-
     private String userName;
     private String firstName;
     private String lastName;
 
     private List<Task> tasks;
+
+    public User(Long id) {
+        this.id = id;
+    }
 
     public User(final Long id, final String userName, final String firstName, final String lastName) {
         this.id = id;
@@ -40,6 +40,7 @@ public class User implements Serializable {
         this.firstName = firstName;
         this.lastName = lastName;
     }
+
 
     public void addTask(Task task){
         tasks.add(task);

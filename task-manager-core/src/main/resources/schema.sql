@@ -18,4 +18,13 @@ CREATE TABLE tasks(
     user_id int,
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES users(id)
+    ON DELETE CASCADE
 );
+
+ -- -----------------------------------------------------
+
+ALTER TABLE tasks CHANGE `title` `title` VARCHAR(20) NULL;
+ALTER TABLE tasks CHANGE `description` `description` VARCHAR(20) NULL;
+ALTER TABLE tasks CHANGE `user_id` `user_id` INT NOT NULL;
+
+ -- -----------------------------------------------------

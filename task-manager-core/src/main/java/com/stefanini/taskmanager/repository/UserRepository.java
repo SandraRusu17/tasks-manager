@@ -11,7 +11,13 @@ public interface UserRepository {
 
     Optional<User> findByUsername(String username);
 
-    List<User> findAll();
+    List<User> findAllUsers();
 
     void update(User user);
+
+    int deleteUserById(Long id);
+
+
+
+
 }

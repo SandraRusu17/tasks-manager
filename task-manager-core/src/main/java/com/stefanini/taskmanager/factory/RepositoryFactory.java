@@ -1,5 +1,7 @@
 package com.stefanini.taskmanager.factory;
 
+import com.stefanini.taskmanager.repository.TaskRepository;
+import com.stefanini.taskmanager.repository.TaskRepositoryImpl;
 import com.stefanini.taskmanager.repository.UserJDBCRepositoryImpl;
 import com.stefanini.taskmanager.repository.UserRepository;
 
@@ -20,5 +22,10 @@ public class RepositoryFactory {
     public UserRepository getUserRepository(){
 //        return UserFileRepositoryImpl.getInstance();
         return UserJDBCRepositoryImpl.getInstance();
+    }
+
+    public TaskRepository getTaskRepository(){
+//        return UserFileRepositoryImpl.getInstance();
+        return TaskRepositoryImpl.getInstance();
     }
 }

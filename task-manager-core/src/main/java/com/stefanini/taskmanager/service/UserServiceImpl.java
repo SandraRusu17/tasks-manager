@@ -32,41 +32,48 @@ public class UserServiceImpl implements UserService {
     }
 
 
+
+    /**
+     * Saves a user in database
+     *
+     * @param user the user with firstName, lastName and username
+     * @return the saved user
+     */
     @Override
     public int saveUser(User user){
         return userRepository.saveUser(user);
     }
 
+
+    /**
+     * Deletes an user by his id
+     *
+     * @param id the user's id
+     * @return the operation is executed
+     */
     @Override
-    public void addTaskFor(Long id,String taskTitle, String taskDescription, String username) throws UserNotFoundException {
-        Task task = new Task(id,taskTitle, taskDescription);
-        User user = userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
-        user.addTask(task);
-        userRepository.update(user);
-        System.out.println(task + " added successfully!");
+    public int deleteUserById(Long id) throws UserNotFoundException{
+        return userRepository.deleteUserById(id);
     }
 
-    @Override
-    public List<Task> getTasksFor(String username) throws UserNotFoundException {
-        User user = userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
-        return user.getTasks();
-    }
 
-    //one more logical feature
-    @Override
-    public void deleteTaskByTitleFor(String taskTitle, String username) throws UserNotFoundException {
-        User user = userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
-        user.getTasks().removeIf(t -> t.getTitle().equals(taskTitle));
-        userRepository.update(user);
-        System.out.println(taskTitle + " deleted successfully!");
-    }
-
+    /**
+     * Gets all the users from database
+     *
+     * @return all the users from database
+     */
     @Override
     public List<User> getAllUsers() {
         logger.debug("Entered getAllUsers");
-        return userRepository.findAll();
+        return userRepository.findAllUsers();
     }
 
+    /**
+     * Returns a user, by his username
+     *
+     * @param username the username given in order to find the user
+     * @return the user, with his id, firstName, lastName and userName
+     */
     @Override
     public Optional<User> findByUsername(String username){
         logger.info("Entered findByUsername with username = {}", username);
