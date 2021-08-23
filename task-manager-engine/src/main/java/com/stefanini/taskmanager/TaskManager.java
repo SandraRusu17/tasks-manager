@@ -2,16 +2,6 @@ package com.stefanini.taskmanager;
 
 import com.stefanini.taskmanager.command.*;
 import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
-import com.stefanini.taskmanager.entity.User;
-import com.stefanini.taskmanager.repository.UserJDBCRepositoryImpl;
-import com.stefanini.taskmanager.service.UserService;
-import com.stefanini.taskmanager.service.UserServiceImpl;
-import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.StringJoiner;
-import java.util.stream.Collectors;
 
 public class TaskManager {
 
@@ -61,13 +51,13 @@ public class TaskManager {
                     System.out.println("Oops. Please refer to the usage of the command : -addTask -un='UserName' -tt='TaskTitle' -td='TaskDescription'");
                     break;
                 }
-                new AddTaskForCommand(getTaskTitle(commandAndParameters),
+                new AddTaskCommand(getTaskTitle(commandAndParameters),
                         getTaskDescription(commandAndParameters),
                         getUsername(commandAndParameters)).execute();
                 break;
 
             case DELETE_TASK_BY_TITLE_FOR_COMMAND:
-                new DeleteTaskByTitleFor(getUsername(commandAndParameters),
+                new DeleteTaskCommand(getUsername(commandAndParameters),
                                          getTaskTitle(commandAndParameters)).execute();
                 break;
 
@@ -77,7 +67,7 @@ public class TaskManager {
                     System.out.println("Oops. Please refer to the usage of the command : -showTasks -un='UserName'");
                     break;
                 }
-                new ShowTasksForCommand(getUsername(commandAndParameters)).execute();
+                new GetTasksCommand(getUsername(commandAndParameters)).execute();
                 break;
         }
     }

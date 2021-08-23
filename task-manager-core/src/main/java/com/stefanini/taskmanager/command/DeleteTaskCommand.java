@@ -4,27 +4,27 @@ import com.stefanini.taskmanager.entity.Task;
 import com.stefanini.taskmanager.entity.User;
 import com.stefanini.taskmanager.factory.ServiceFactory;
 import com.stefanini.taskmanager.service.TaskService;
-import com.stefanini.taskmanager.service.UserService;
 import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
 
-public class ShowTasksForCommand implements Command {
+public class DeleteTaskCommand implements Command {
     private String userName;
+    private String taskTitle;
 
     private TaskService taskService = ServiceFactory.getInstance().getTaskService();
 
-    public ShowTasksForCommand(final String userName) {
 
+    public DeleteTaskCommand(String userName, String taskTitle) {
         this.userName = userName;
+        this.taskTitle = taskTitle;
     }
+
 
     @Override
     public void execute() throws UserNotFoundException {
         try {
-            taskService.getTasksFor(userName).forEach(System.out::println);
+            taskService.deleteTaskByTitleFor(taskTitle, userName);
         } catch (UserNotFoundException e) {
             System.out.println("Oops. User with username " + userName + " not found!");
         }
     }
-
-
 }
