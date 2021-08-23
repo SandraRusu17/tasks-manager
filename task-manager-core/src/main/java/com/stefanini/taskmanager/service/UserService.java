@@ -12,7 +12,7 @@ public interface UserService {
     /**
      * Saves a user in database
      *
-     * @param user the user with firstName, lastName and username
+     * @param user - a <code>User</code>  representing the user with firstName, lastName and username
      * @return the saved user
      */
     int saveUser(User user);
@@ -20,7 +20,7 @@ public interface UserService {
     /**
      * Returns a user, by his username
      *
-     * @param username the username given in order to find the user
+     * @param username  - a <code>String</code> representing the username given in order to find the user
      * @return the user, with his id, firstName, lastName and userName
      */
     Optional<User> findByUsername(String username);
@@ -29,8 +29,8 @@ public interface UserService {
     /**
      * Deletes an user by his id
      *
-     * @param id the user's id
-     * @return the operation is executed
+     * @param id - a <code>Long</code> representing the user's id
+     * @return int the operation is executed
      */
     //one more logical feature
     int deleteUserById(Long id) throws UserNotFoundException;
