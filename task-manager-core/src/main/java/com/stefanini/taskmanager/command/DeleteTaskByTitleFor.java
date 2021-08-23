@@ -19,9 +19,12 @@ public class DeleteTaskByTitleFor implements Command {
     }
 
 
-
     @Override
     public void execute() throws UserNotFoundException {
-        taskService.deleteTaskByTitleFor(taskTitle,userName);
+        try {
+            taskService.deleteTaskByTitleFor(taskTitle, userName);
+        } catch (UserNotFoundException e) {
+            System.out.println("Oops. User with username " + userName + " not found!");
+        }
     }
 }

@@ -6,26 +6,18 @@ import com.stefanini.taskmanager.entity.User;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Slf4j
 public class TaskRepositoryImpl implements TaskRepository {
-    private static final Logger logger = LoggerFactory.getLogger(TaskRepositoryImpl.class);
-
 
     private final String URL = "jdbc:mysql://localhost:3306/";
-    private final String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
     private final String DATABASE = "taskmanager";
     private final String USERNAME = "root";
     private final String PASSWORD = "mysqleight";
-
-    private static final String DELETE_USER = "DELETE FROM users WHERE id=?";
-    private static final String FIND_BY_USERNAME = "SELECT * FROM users WHERE userName=?";
-    private static final String FIND_ALL = "SELECT * FROM users ORDER BY id";
-    private static final String UPDATE = "UPDATE users SET firstName=?, lastName=?, userName=? WHERE id=?";
-    private static final String SAVE_USER = "INSERT INTO users(firstName, lastName, userName) VALUES (?, ?, ?)";
-    private static final String DELETE_TASK = "DELETE FROM tasks WHERE user_id=?";
-    private static final String SAVE_TASK = "INSERT INTO tasks(title, description, user_id) VALUES (?, ?, ?)";
 
 
     public static TaskRepositoryImpl INSTANCE;
@@ -73,7 +65,7 @@ public class TaskRepositoryImpl implements TaskRepository {
             }
 
         }catch (SQLException e) {
-            logger.error("Something bad happened during fetching a task with username = {}", username, e);
+            log.error("Something bad happened during fetching a task with username = {}", username, e);
         }
         return result;
     }
@@ -96,7 +88,6 @@ public class TaskRepositoryImpl implements TaskRepository {
                             r.getString("userName"));
                 }
 
-//                assert user != null;
                 ps2.setLong(1, user.getId());
 
                 try (ResultSet r2 = ps2.executeQuery()) {
@@ -111,7 +102,7 @@ public class TaskRepositoryImpl implements TaskRepository {
             }
 
         } catch (SQLException e) {
-            logger.error("Something bad happened during fetching a task with username = {}", username, e);
+            log.error("Something bad happened during fetching a task with username = {}", username, e);
         }
 
         return tasks;
@@ -155,7 +146,7 @@ public class TaskRepositoryImpl implements TaskRepository {
             }
             ps3.executeUpdate();
         } catch (SQLException e) {
-            logger.error("Something bad happened during fetching a task with username = {} and title = {}", username, taskTitle, e);
+            log.error("Something bad happened during fetching a task with username = {} and title = {}", username, taskTitle, e);
         }
     }
 }

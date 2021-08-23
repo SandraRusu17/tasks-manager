@@ -30,12 +30,12 @@
 //    public static final String FILE_LOCATION = "taskmanager.ser";
 //
 //    @Override
-//    public boolean saveUser(final User user) {
+//    public int saveUser(final User user) {
 //        try (
 //                FileOutputStream fout = new FileOutputStream(FILE_LOCATION);
 //                ObjectOutputStream oos = new ObjectOutputStream(fout)
 //        ) {
-//            List<User> users = findAll();
+//            List<User> users = findAllUsers();
 //            users.add(user);
 //            oos.writeObject(users);
 //        } catch (IOException e) {
@@ -47,14 +47,14 @@
 //
 //    @Override
 //    public Optional<User> findByUsername(final String username) {
-//        return findAll()
+//        return findAllUsers()
 //                .stream()
 //                .filter(u -> u.getUserName().equals(username)).findFirst();
 //    }
 //
 //    @SuppressWarnings("unchecked")
 //    @Override
-//    public List<User> findAll() {
+//    public List<User> findAllUsers() {
 //        try (
 //                FileInputStream fin = new FileInputStream(FILE_LOCATION);
 //                ObjectInputStream oos = new ObjectInputStream(fin)
@@ -68,7 +68,7 @@
 //
 //    @Override
 //    public void update(User user) {
-//        List<User> users = findAll();
+//        List<User> users = findAllUsers();
 //        try (
 //                FileOutputStream fout = new FileOutputStream(FILE_LOCATION);
 //                ObjectOutputStream oos = new ObjectOutputStream(fout)

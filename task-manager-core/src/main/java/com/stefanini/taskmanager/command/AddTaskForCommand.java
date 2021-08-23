@@ -12,7 +12,6 @@ public class AddTaskForCommand implements Command {
     private TaskService taskService = ServiceFactory.getInstance().getTaskService();
 
 
-
     public AddTaskForCommand(String titleTask, String taskDescription, String username) {
         this.titleTask = titleTask;
         this.taskDescription = taskDescription;
@@ -22,7 +21,11 @@ public class AddTaskForCommand implements Command {
     @Override
     public void execute() throws UserNotFoundException {
 
-        taskService.addTaskFor(titleTask,taskDescription,username);
+        try {
+            taskService.addTaskFor(titleTask, taskDescription, username);
+        } catch (UserNotFoundException e) {
+            System.out.println("Oops. User with username " + username + " not found!");
+        }
     }
 
 }

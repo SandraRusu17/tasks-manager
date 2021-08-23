@@ -10,7 +10,7 @@ public class GetAllUsersCommand implements Command {
 
 
     @Override
-    public void execute(){
+    public void execute() {
 
         userService.getAllUsers().forEach(System.out::println);
     }

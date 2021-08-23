@@ -1,4 +1,5 @@
 package com.stefanini.taskmanager;
+
 import com.stefanini.taskmanager.command.*;
 import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
 import com.stefanini.taskmanager.entity.User;
@@ -30,7 +31,7 @@ public class TaskManager {
 //    private final UserFileRepositoryImpl userFileRepository = new UserFileRepositoryImpl();
 //    private final UserService userService = new UserServiceImpl(userFileRepository);
 
-    public void parseCommandArguments(String[] arguments) {
+    public void parseCommandArguments(String[] arguments) throws UserNotFoundException {
         String joinedArguments = String.join(" ", arguments); //so we can have arguments with spaces
         String[] commandAndParameters = joinedArguments.split(" -"); //split by ' -' again so we have the command and its parameters
 
@@ -46,9 +47,9 @@ public class TaskManager {
                     System.out.println("Oops. Please refer to the usage of the command : -createUser -fn='FirstName' -ln='LastName' -un='UserName'");
                     break;
                 }
-                new AddUserCommand( getUsername(commandAndParameters),
-                                    getFirstName(commandAndParameters),
-                                    getLastName(commandAndParameters)).execute();
+                new AddUserCommand(getUsername(commandAndParameters),
+                        getFirstName(commandAndParameters),
+                        getLastName(commandAndParameters)).execute();
                 break;
 
             case SHOW_ALL_USERS_COMMAND:
@@ -60,21 +61,14 @@ public class TaskManager {
                     System.out.println("Oops. Please refer to the usage of the command : -addTask -un='UserName' -tt='TaskTitle' -td='TaskDescription'");
                     break;
                 }
-                try {
-                   new AddTaskForCommand( getTaskTitle(commandAndParameters),
-                                          getTaskDescription(commandAndParameters),
-                                          getUsername(commandAndParameters)).execute();
-                } catch (UserNotFoundException e) {
-                    System.out.println("Oops. User with username " + getUsername(commandAndParameters) + " not found!");
-                }
+                new AddTaskForCommand(getTaskTitle(commandAndParameters),
+                        getTaskDescription(commandAndParameters),
+                        getUsername(commandAndParameters)).execute();
                 break;
 
             case DELETE_TASK_BY_TITLE_FOR_COMMAND:
-                try {
-                    new DeleteTaskByTitleFor(getUsername(commandAndParameters),getTaskTitle(commandAndParameters)).execute();
-                } catch (UserNotFoundException e) {
-                    System.out.println("Oops. User with username " + getUsername(commandAndParameters) + " not found!");
-                }
+                new DeleteTaskByTitleFor(getUsername(commandAndParameters),
+                                         getTaskTitle(commandAndParameters)).execute();
                 break;
 
 
@@ -83,24 +77,11 @@ public class TaskManager {
                     System.out.println("Oops. Please refer to the usage of the command : -showTasks -un='UserName'");
                     break;
                 }
-                try {
-                    new ShowTasksForCommand(getUsername(commandAndParameters)).execute();
-                }
-                catch (UserNotFoundException e) {
-                    System.out.println("Oops. User with username " + getUsername(commandAndParameters) + " not found!");
-                }
+                new ShowTasksForCommand(getUsername(commandAndParameters)).execute();
                 break;
         }
     }
 
-//    private String formatUsers(final List<User> users) {
-//        StringJoiner joiner = new StringJoiner(", \n");
-//        for (User user : users) {
-//            String formattedDetails = user.getFormattedDetails();
-//            joiner.add(formattedDetails);
-//        }
-//        return joiner.toString();
-//    }
 
     private String getStringValue(final String s) {
         int startIndexOfQuote = s.indexOf('\'');

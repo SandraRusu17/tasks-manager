@@ -11,7 +11,6 @@ import java.util.Optional;
 public class UserJDBCRepositoryImpl implements UserRepository{
 
     private final String URL = "jdbc:mysql://localhost:3306/";
-    private final String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
     private final String DATABASE = "taskmanager";
     private final String USERNAME = "root";
     private final String PASSWORD = "mysqleight";
