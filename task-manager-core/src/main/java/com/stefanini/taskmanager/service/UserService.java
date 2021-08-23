@@ -8,12 +8,38 @@ import com.stefanini.taskmanager.entity.User;
 import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
 
 public interface UserService {
+
+    /**
+     * Saves a user in database
+     *
+     * @param user the user with firstName, lastName and username
+     * @return the saved user
+     */
     int saveUser(User user);
 
+    /**
+     * Returns a user, by his username
+     *
+     * @param username the username given in order to find the user
+     * @return the user, with his id, firstName, lastName and userName
+     */
     Optional<User> findByUsername(String username);
 
+
+    /**
+     * Deletes an user by his id
+     *
+     * @param id the user's id
+     * @return the operation is executed
+     */
     //one more logical feature
     int deleteUserById(Long id) throws UserNotFoundException;
 
+
+    /**
+     * Gets all the users from database
+     *
+     * @return all the users from database
+     */
     List<User> getAllUsers();
 }
