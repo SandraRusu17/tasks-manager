@@ -19,7 +19,7 @@ public class App {
         UserService userService = ServiceFactory.getInstance().getUserService();
         TaskService taskService = ServiceFactory.getInstance().getTaskService();
 
-        new TaskManager().parseCommandArguments(args);
+        new TaskManager().parseCommandArguments(args).execute();
 
 
 //        // add a task for a specific user

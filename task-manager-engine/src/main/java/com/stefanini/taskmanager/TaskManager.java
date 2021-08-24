@@ -26,7 +26,7 @@ public class TaskManager {
 //    private final UserFileRepositoryImpl userFileRepository = new UserFileRepositoryImpl();
 //    private final UserService userService = new UserServiceImpl(userFileRepository);
 
-    public void parseCommandArguments(String[] arguments) throws UserNotFoundException, InvalidCommandException {
+    public Command parseCommandArguments(String[] arguments) throws UserNotFoundException, InvalidCommandException {
         String joinedArguments = String.join(" ", arguments); //so we can have arguments with spaces
         String[] commandAndParameters = joinedArguments.split(" -"); //split by ' -' again so we have the command and its parameters
 
@@ -43,11 +43,7 @@ public class TaskManager {
                         System.out.println("Oops. Please refer to the usage of the command : -createUser -fn='FirstName' -ln='LastName' -un='UserName'");
                         break;
                     }
-
-                    new AddUserCommand(getUsername(commandAndParameters),
-                            getFirstName(commandAndParameters),
-                            getLastName(commandAndParameters)).execute();
-                    break;
+                    return addUserCommand(commandAndParameters);
 
                 case SHOW_ALL_USERS_COMMAND:
                     new GetAllUsersCommand().execute();
@@ -58,16 +54,10 @@ public class TaskManager {
                         System.out.println("Oops. Please refer to the usage of the command : -addTask -un='UserName' -tt='TaskTitle' -td='TaskDescription'");
                         break;
                     }
-                    new AddTaskCommand(getTaskTitle(commandAndParameters),
-                            getTaskDescription(commandAndParameters),
-                            getUsername(commandAndParameters)).execute();
-                    break;
+                    return addTaskCommand(commandAndParameters);
 
                 case DELETE_TASK_BY_TITLE_FOR_COMMAND:
-                    new DeleteTaskCommand(getUsername(commandAndParameters),
-                            getTaskTitle(commandAndParameters)).execute();
-                    break;
-
+                    return deleteTaskCommand(commandAndParameters);
 
                 case SHOW_TASKS_FOR_COMMAND:
                     if (commandAndParameters.length < 2) {
@@ -77,11 +67,31 @@ public class TaskManager {
                     new GetTasksCommand(getUsername(commandAndParameters)).execute();
                     break;
             }
-        }catch ( InvalidCommandException e) {
+        } catch (InvalidCommandException e) {
             System.out.println(e.getMessage());
             log.trace("Error reading command", e);
             System.exit(0);
         }
+        return null;
+    }
+
+    private Command deleteTaskCommand(String[] commandAndParameters) throws InvalidCommandException {
+        return new DeleteTaskCommand(getUsername(commandAndParameters),
+                                     getTaskTitle(commandAndParameters));
+
+    }
+
+    private Command addTaskCommand(String[] commandAndParameters) throws InvalidCommandException {
+        return new AddTaskCommand(getTaskTitle(commandAndParameters),
+                                  getTaskDescription(commandAndParameters),
+                                  getUsername(commandAndParameters));
+    }
+
+    private Command addUserCommand(String[] commandAndParameters) throws InvalidCommandException {
+
+                return new AddUserCommand(getUsername(commandAndParameters),
+                                          getFirstName(commandAndParameters),
+                                          getLastName(commandAndParameters));
     }
 
 
@@ -104,7 +114,6 @@ public class TaskManager {
         }
         return s.substring(startIndexOfQuote + 1, endIndexOfQuote);
     }
-
 
 
     private String getFirstName(String[] commandParameters) throws InvalidCommandException {
