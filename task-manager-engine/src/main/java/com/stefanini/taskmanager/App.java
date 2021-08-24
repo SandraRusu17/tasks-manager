@@ -9,14 +9,17 @@ import com.stefanini.taskmanager.repository.UserJDBCRepositoryImpl;
 import com.stefanini.taskmanager.repository.UserRepository;
 import com.stefanini.taskmanager.service.TaskService;
 import com.stefanini.taskmanager.service.UserService;
+import com.stefanini.taskmanager.service.exceptions.InvalidCommandException;
 import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
 
 import java.util.Optional;
 
 public class App {
-    public static void main(String[] args) throws UserNotFoundException {
+    public static void main(String[] args) throws UserNotFoundException, InvalidCommandException {
         UserService userService = ServiceFactory.getInstance().getUserService();
         TaskService taskService = ServiceFactory.getInstance().getTaskService();
+
+        new TaskManager().parseCommandArguments(args);
 
 
 //        // add a task for a specific user
