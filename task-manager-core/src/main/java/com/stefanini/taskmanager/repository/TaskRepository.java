@@ -26,10 +26,9 @@ public interface TaskRepository {
     /**
      * Adds tasks to a specific user, by giving his username
      *
-     * @param taskTitle -a <code>String</code> representing the title of the task which will be added
-     * @param taskDescription -a <code>String</code> representing the description of the task which will be added
+     * @param task -a <code>Task</code> representing the task which will be added
      * @param username -a <code>String</code> representing the username of the user, for whom the task will be added
      */
-    int addTaskFor(String taskTitle, String taskDescription, String username);
+    int saveTaskFor(Task task, String username);
 
 }

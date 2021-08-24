@@ -45,7 +45,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public int addTaskFor(String taskTitle, String taskDescription, String username) throws UserNotFoundException {
-        return taskRepository.addTaskFor(taskTitle, taskDescription, username);
+        return taskRepository.saveTaskFor(new Task(taskTitle, taskDescription), username);
     }
 
 
