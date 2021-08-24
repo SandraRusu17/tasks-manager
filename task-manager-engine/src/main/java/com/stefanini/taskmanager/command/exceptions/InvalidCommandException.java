@@ -1,4 +1,4 @@
-package com.stefanini.taskmanager.service.exceptions;
+package com.stefanini.taskmanager.command.exceptions;
 
 public class InvalidCommandException extends Exception {
     public InvalidCommandException(final String message) {

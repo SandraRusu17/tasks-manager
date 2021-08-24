@@ -40,7 +40,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.stefanini.taskmanager.App</mainClass>
+                            <mainClass>com.stefanini.taskmanager.command.utils.App</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
