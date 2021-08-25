@@ -10,13 +10,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Slf4j
-public class UserJDBCRepositoryImpl implements UserRepository {
+public class UserJDBCRepositoryImpl extends DataSourceProvider implements UserRepository {
 
-
-    private final String URL = "jdbc:mysql://localhost:3306/";
-    private final String DATABASE = "taskmanager";
-    private final String USERNAME = "root";
-    private final String PASSWORD = "mysqleight";
 
     private static final String DELETE_USER = "DELETE FROM users WHERE id=?";
     private static final String FIND_BY_USERNAME = "SELECT * FROM users WHERE userName=?";
@@ -36,9 +31,6 @@ public class UserJDBCRepositoryImpl implements UserRepository {
         return INSTANCE;
     }
 
-    private Connection getMysqlConnection() throws SQLException {
-        return DriverManager.getConnection(DB_URL);
-    }
 
     @Override
     public int saveUser(User user) {

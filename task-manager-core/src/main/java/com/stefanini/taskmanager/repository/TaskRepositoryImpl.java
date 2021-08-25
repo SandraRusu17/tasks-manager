@@ -12,13 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Slf4j
-public class TaskRepositoryImpl implements TaskRepository {
-
-    private final String URL = "jdbc:mysql://localhost:3306/";
-    private final String DATABASE = "taskmanager";
-    private final String USERNAME = "root";
-    private final String PASSWORD = "mysqleight";
-
+public class TaskRepositoryImpl extends DataSourceProvider implements TaskRepository {
 
     public static TaskRepositoryImpl INSTANCE;
 
@@ -33,9 +27,7 @@ public class TaskRepositoryImpl implements TaskRepository {
         return INSTANCE;
     }
 
-    private Connection getMysqlConnection() throws SQLException {
-        return DriverManager.getConnection(URL + DATABASE, USERNAME, PASSWORD);
-    }
+
 
 
     @Override
