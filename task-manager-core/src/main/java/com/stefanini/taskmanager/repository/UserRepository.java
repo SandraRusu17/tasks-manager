@@ -33,6 +33,7 @@ public interface UserRepository {
      * Deletes an user by his id
      *
      * @param id -(Long) the user's id
+     * @return
      */
     int deleteUserById(Long id);
 

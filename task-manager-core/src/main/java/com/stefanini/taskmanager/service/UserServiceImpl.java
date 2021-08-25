@@ -8,13 +8,12 @@ import com.stefanini.taskmanager.entity.User;
 import com.stefanini.taskmanager.repository.UserRepository;
 import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+@Slf4j
 public class UserServiceImpl implements UserService {
-    private static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
-
     public static UserServiceImpl INSTANCE;
 
     private final UserRepository userRepository;
@@ -24,7 +23,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public static UserServiceImpl getInstance(UserRepository userRepository) {
-        if(INSTANCE == null) {
+        if (INSTANCE == null) {
             INSTANCE = new UserServiceImpl(userRepository);
         }
 
@@ -33,27 +32,28 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public int saveUser(User user){
+    public int saveUser(User user) {
+        log.info("Entered saveUser with user = {}", user);
         return userRepository.saveUser(user);
     }
 
 
-
     @Override
-    public int deleteUserById(Long id) throws UserNotFoundException{
+    public int deleteUserById(Long id) throws UserNotFoundException {
+        log.info("Entered deleteUserById with id = {}", id);
         return userRepository.deleteUserById(id);
     }
 
     @Override
     public List<User> getAllUsers() {
-        logger.debug("Entered getAllUsers");
+        log.debug("Entered getAllUsers");
         return userRepository.findAllUsers();
     }
 
 
     @Override
-    public Optional<User> findByUsername(String username){
-        logger.info("Entered findByUsername with username = {}", username);
-       return this.userRepository.findByUsername(username);
+    public Optional<User> findByUsername(String username) {
+        log.info("Entered findByUsername with username = {}", username);
+        return this.userRepository.findByUsername(username);
     }
 }

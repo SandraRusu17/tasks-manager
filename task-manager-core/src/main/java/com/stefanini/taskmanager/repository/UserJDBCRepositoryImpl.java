@@ -2,13 +2,14 @@ package com.stefanini.taskmanager.repository;
 
 import com.stefanini.taskmanager.entity.Task;
 import com.stefanini.taskmanager.entity.User;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 public class UserJDBCRepositoryImpl implements UserRepository {
 
     private final String URL = "jdbc:mysql://localhost:3306/";
@@ -35,7 +36,7 @@ public class UserJDBCRepositoryImpl implements UserRepository {
     }
 
     private Connection getDBConnection() throws SQLException {
-            return DriverManager.getConnection(URL + DATABASE, USERNAME, PASSWORD);
+        return DriverManager.getConnection(URL + DATABASE, USERNAME, PASSWORD);
     }
 
     @Override
@@ -76,13 +77,13 @@ public class UserJDBCRepositoryImpl implements UserRepository {
 
             if (rs.next()) {
                 final User user = new User(rs.getLong("id"),
-                                                       rs.getString("firstName"),
-                                                       rs.getString("lastName"),
-                                                       rs.getString("userName"));
+                        rs.getString("firstName"),
+                        rs.getString("lastName"),
+                        rs.getString("userName"));
                 result = Optional.of(user);
                 ps2.setLong(1, user.getId());
 
-                try(ResultSet r2 = ps2.executeQuery()) {
+                try (ResultSet r2 = ps2.executeQuery()) {
                     while (r2.next()) {
                         Task task = new Task(r2.getString("title"),
                                 r2.getString("description"));
@@ -121,7 +122,7 @@ public class UserJDBCRepositoryImpl implements UserRepository {
                 try (ResultSet r2 = ps2.executeQuery()) {
                     while (r2.next()) {
                         Task task = new Task(r2.getString("title"),
-                                            r2.getString("description"));
+                                r2.getString("description"));
                         task.setId(r2.getLong("id"));
                         user.addTask(task);
                     }
@@ -130,7 +131,7 @@ public class UserJDBCRepositoryImpl implements UserRepository {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Something bad happened during fetching users = {} ", users, e);
         }
         return users;
     }
@@ -149,8 +150,9 @@ public class UserJDBCRepositoryImpl implements UserRepository {
             return ps1.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            log.error("Something bad happened during fetching a user with id = {} ", id, e);
         }
+        return 0;
     }
 
 
