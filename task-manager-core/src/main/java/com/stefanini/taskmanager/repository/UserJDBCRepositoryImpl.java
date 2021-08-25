@@ -12,6 +12,7 @@ import java.util.Optional;
 @Slf4j
 public class UserJDBCRepositoryImpl implements UserRepository {
 
+
     private final String URL = "jdbc:mysql://localhost:3306/";
     private final String DATABASE = "taskmanager";
     private final String USERNAME = "root";
@@ -35,14 +36,14 @@ public class UserJDBCRepositoryImpl implements UserRepository {
         return INSTANCE;
     }
 
-    private Connection getDBConnection() throws SQLException {
-        return DriverManager.getConnection(URL + DATABASE, USERNAME, PASSWORD);
+    private Connection getMysqlConnection() throws SQLException {
+        return DriverManager.getConnection(DB_URL);
     }
 
     @Override
     public int saveUser(User user) {
         int result = 0;
-        try (Connection connection = getDBConnection();
+        try (Connection connection = getMysqlConnection();
              PreparedStatement ps = connection.prepareStatement("INSERT INTO users(firstName, lastName, userName) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, user.getFirstName());
@@ -68,7 +69,7 @@ public class UserJDBCRepositoryImpl implements UserRepository {
 
 //        User user = null;
         Optional<User> result;
-        try (Connection connection = getDBConnection();
+        try (Connection connection = getMysqlConnection();
              PreparedStatement ps = connection.prepareStatement(FIND_BY_USERNAME);
              PreparedStatement ps2 = connection.prepareStatement("SELECT * FROM tasks WHERE user_id = ?")) {
 
@@ -103,7 +104,7 @@ public class UserJDBCRepositoryImpl implements UserRepository {
     @Override
     public List<User> findAllUsers() {
         List<User> users = new ArrayList<>();
-        try (Connection connection = getDBConnection();
+        try (Connection connection = getMysqlConnection();
              PreparedStatement ps1 = connection.prepareStatement(FIND_ALL);
              PreparedStatement ps2 = connection.prepareStatement("SELECT * FROM tasks WHERE user_id = ?")) {
 
@@ -143,7 +144,7 @@ public class UserJDBCRepositoryImpl implements UserRepository {
 
     @Override
     public int deleteUserById(Long id) {
-        try (Connection connection = getDBConnection();
+        try (Connection connection = getMysqlConnection();
              PreparedStatement ps1 = connection.prepareStatement(DELETE_USER)) {
 
             ps1.setLong(1, id);

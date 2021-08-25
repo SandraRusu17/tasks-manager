@@ -37,6 +37,7 @@ public interface UserRepository {
      */
     int deleteUserById(Long id);
 
+    public static final String DB_URL = "jdbc:mysql://localhost:3306/taskmanager?user=root&password=mysqleight";
 
 
 
