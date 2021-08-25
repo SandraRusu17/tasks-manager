@@ -5,6 +5,7 @@ import com.stefanini.taskmanager.entity.User;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,10 +19,6 @@ public class UserJDBCRepositoryImpl implements UserRepository {
     private static final String DELETE_USER = "DELETE FROM users WHERE id=?";
     private static final String FIND_BY_USERNAME = "SELECT * FROM users WHERE userName=?";
     private static final String FIND_ALL = "SELECT * FROM users ORDER BY id";
-    private static final String UPDATE = "UPDATE users SET firstName=?, lastName=?, userName=? WHERE id=?";
-    private static final String SAVE_USER = "INSERT INTO users(firstName, lastName, userName) VALUES (?, ?, ?)";
-    private static final String DELETE_TASK = "DELETE FROM tasks WHERE title=?";
-    private static final String SAVE_TASK = "INSERT INTO tasks(title, description, user_id) VALUES (?, ?, ?)";
 
 
     public static UserJDBCRepositoryImpl INSTANCE;
@@ -37,10 +34,14 @@ public class UserJDBCRepositoryImpl implements UserRepository {
         return INSTANCE;
     }
 
+    private Connection getDBConnection() throws SQLException {
+            return DriverManager.getConnection(URL + DATABASE, USERNAME, PASSWORD);
+    }
+
     @Override
     public int saveUser(User user) {
         int result = 0;
-        try (Connection connection = DriverManager.getConnection(URL + DATABASE, USERNAME, PASSWORD);
+        try (Connection connection = getDBConnection();
              PreparedStatement ps = connection.prepareStatement("INSERT INTO users(firstName, lastName, userName) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, user.getFirstName());
@@ -66,7 +67,7 @@ public class UserJDBCRepositoryImpl implements UserRepository {
 
 //        User user = null;
         Optional<User> result;
-        try (Connection connection = DriverManager.getConnection(URL + DATABASE, USERNAME, PASSWORD);
+        try (Connection connection = getDBConnection();
              PreparedStatement ps = connection.prepareStatement(FIND_BY_USERNAME);
              PreparedStatement ps2 = connection.prepareStatement("SELECT * FROM tasks WHERE user_id = ?")) {
 
@@ -101,7 +102,7 @@ public class UserJDBCRepositoryImpl implements UserRepository {
     @Override
     public List<User> findAllUsers() {
         List<User> users = new ArrayList<>();
-        try (Connection connection = DriverManager.getConnection(URL + DATABASE, USERNAME, PASSWORD);
+        try (Connection connection = getDBConnection();
              PreparedStatement ps1 = connection.prepareStatement(FIND_ALL);
              PreparedStatement ps2 = connection.prepareStatement("SELECT * FROM tasks WHERE user_id = ?")) {
 
@@ -135,8 +136,13 @@ public class UserJDBCRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public void update(User user) {
+
+    }
+
+    @Override
     public int deleteUserById(Long id) {
-        try (Connection connection = DriverManager.getConnection(URL + DATABASE, USERNAME, PASSWORD);
+        try (Connection connection = getDBConnection();
              PreparedStatement ps1 = connection.prepareStatement(DELETE_USER)) {
 
             ps1.setLong(1, id);
@@ -145,12 +151,6 @@ public class UserJDBCRepositoryImpl implements UserRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-
-    @Override
-    public void update(User user) {
-
     }
 
 
