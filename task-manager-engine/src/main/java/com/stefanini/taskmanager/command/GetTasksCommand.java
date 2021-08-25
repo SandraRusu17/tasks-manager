@@ -1,29 +1,30 @@
 package com.stefanini.taskmanager.command;
 
-import com.stefanini.taskmanager.entity.Task;
-import com.stefanini.taskmanager.entity.User;
+import com.stefanini.taskmanager.command.exceptions.InvalidCommandException;
+import com.stefanini.taskmanager.command.utils.CommandParser;
 import com.stefanini.taskmanager.factory.ServiceFactory;
 import com.stefanini.taskmanager.service.TaskService;
-import com.stefanini.taskmanager.service.UserService;
 import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
 
 public class GetTasksCommand implements Command {
-    private String userName;
+    private final TaskService taskService = ServiceFactory.getInstance().getTaskService();
 
-    private TaskService taskService = ServiceFactory.getInstance().getTaskService();
+    private final String[] commandAndParameters;
 
-    public GetTasksCommand(final String userName) {
 
-        this.userName = userName;
+    public GetTasksCommand(final String[] commandAndParameters) {
+        this.commandAndParameters = commandAndParameters;
     }
 
     @Override
-    public void execute() throws UserNotFoundException {
-        try {
-            taskService.getTasksFor(userName).forEach(System.out::println);
-        } catch (UserNotFoundException e) {
-            System.out.println("Oops. User with username " + userName + " not found!");
+    public void execute() throws UserNotFoundException, InvalidCommandException {
+        if (commandAndParameters.length < 2) {
+            throw new InvalidCommandException(
+                    "Oops. Please refer to the usage of the command : -showTasks -un='UserName'");
         }
+        final String username = CommandParser.getUsername(commandAndParameters);
+        System.out.println("All tasks for [" + username + "] :");
+        taskService.getTasksFor(username).forEach(System.out::println);
     }
 
 

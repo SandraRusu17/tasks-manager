@@ -1,30 +1,33 @@
 package com.stefanini.taskmanager.command;
 
-import com.stefanini.taskmanager.entity.Task;
-import com.stefanini.taskmanager.entity.User;
+import com.stefanini.taskmanager.command.exceptions.InvalidCommandException;
 import com.stefanini.taskmanager.factory.ServiceFactory;
 import com.stefanini.taskmanager.service.TaskService;
 import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
 
+import static com.stefanini.taskmanager.command.utils.CommandParser.getTaskTitle;
+import static com.stefanini.taskmanager.command.utils.CommandParser.getUsername;
+
 public class DeleteTaskCommand implements Command {
-    private String userName;
-    private String taskTitle;
 
-    private TaskService taskService = ServiceFactory.getInstance().getTaskService();
+    private final TaskService taskService = ServiceFactory.getInstance().getTaskService();
 
+    private final String[] commandAndParameters;
 
-    public DeleteTaskCommand(String userName, String taskTitle) {
-        this.userName = userName;
-        this.taskTitle = taskTitle;
+    public DeleteTaskCommand(final String[] commandAndParameters) {
+        this.commandAndParameters = commandAndParameters;
     }
 
 
     @Override
-    public void execute() throws UserNotFoundException {
-        try {
-            taskService.deleteTaskByTitleFor(taskTitle, userName);
-        } catch (UserNotFoundException e) {
-            System.out.println("Oops. User with username " + userName + " not found!");
-        }
+    public void execute() throws UserNotFoundException, InvalidCommandException {
+       if(commandAndParameters.length < 3) {
+           throw new InvalidCommandException(
+                   "Oops. Please refer to the usage of the command: -deleteTask -un='UserName' -tt='TaskTitle'");
+       }
+       final String taskTitle = getTaskTitle(commandAndParameters);
+       final String username = getUsername(commandAndParameters);
+       taskService.deleteTaskByTitleFor(taskTitle, username);
+        System.out.println("Task [" + taskTitle + "] deleted successfully");
     }
 }

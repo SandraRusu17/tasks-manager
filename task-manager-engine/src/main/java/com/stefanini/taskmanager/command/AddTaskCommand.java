@@ -1,10 +1,9 @@
-package com.stefanini.taskmanager.command.utils;
+package com.stefanini.taskmanager.command;
 
 import com.stefanini.taskmanager.command.exceptions.InvalidCommandException;
 import com.stefanini.taskmanager.factory.ServiceFactory;
 import com.stefanini.taskmanager.service.TaskService;
 import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
-import lombok.AllArgsConstructor;
 
 import static com.stefanini.taskmanager.command.utils.CommandParser.*;
 

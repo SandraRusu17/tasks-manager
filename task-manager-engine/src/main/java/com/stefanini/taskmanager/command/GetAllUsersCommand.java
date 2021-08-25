@@ -1,6 +1,5 @@
-package com.stefanini.taskmanager.command.utils;
+package com.stefanini.taskmanager.command;
 
-import com.stefanini.taskmanager.command.utils.Command;
 import com.stefanini.taskmanager.factory.ServiceFactory;
 import com.stefanini.taskmanager.service.UserService;
 
