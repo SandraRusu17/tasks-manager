@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class UserJDBCRepositoryImpl implements UserRepository{
+public class UserJDBCRepositoryImpl implements UserRepository {
 
     private final String URL = "jdbc:mysql://localhost:3306/";
     private final String DATABASE = "taskmanager";
@@ -22,7 +22,6 @@ public class UserJDBCRepositoryImpl implements UserRepository{
     private static final String SAVE_USER = "INSERT INTO users(firstName, lastName, userName) VALUES (?, ?, ?)";
     private static final String DELETE_TASK = "DELETE FROM tasks WHERE title=?";
     private static final String SAVE_TASK = "INSERT INTO tasks(title, description, user_id) VALUES (?, ?, ?)";
-
 
 
     public static UserJDBCRepositoryImpl INSTANCE;
@@ -109,10 +108,8 @@ public class UserJDBCRepositoryImpl implements UserRepository{
                 ps2.setLong(1, user.getId());
                 try (ResultSet r2 = ps2.executeQuery()) {
                     while (r2.next()) {
-                        Task task = new Task(r2.getLong("id"),
-                                r2.getString("title"),
-                                r2.getString("description"),
-                                r2.getLong("user_id"));
+                        Task task = new Task(r2.getString("title"),
+                                            r2.getString("description"));
                         user.addTask(task);
                     }
 
@@ -126,18 +123,17 @@ public class UserJDBCRepositoryImpl implements UserRepository{
     }
 
     @Override
-    public int deleteUserById(Long id){
+    public int deleteUserById(Long id) {
         try (Connection connection = DriverManager.getConnection(URL + DATABASE, USERNAME, PASSWORD);
              PreparedStatement ps1 = connection.prepareStatement(DELETE_USER)) {
 
-            ps1.setLong(1,id);
+            ps1.setLong(1, id);
             return ps1.executeUpdate();
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-
 
 
     @Override

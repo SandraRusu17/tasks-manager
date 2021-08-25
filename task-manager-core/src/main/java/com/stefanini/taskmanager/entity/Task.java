@@ -16,7 +16,7 @@ public class Task implements Serializable {
     private Long id;
     private String title;
     private String description;
-    private Long userId;
+    private User user;
 
     public Task(String title, String description) {
         this.title = title;

@@ -44,6 +44,7 @@ public class User implements Serializable {
 
     public void addTask(Task task){
         tasks.add(task);
+        tasks.forEach(t -> t.setUser(this));
     }
 
     public String getFormattedDetails(){
