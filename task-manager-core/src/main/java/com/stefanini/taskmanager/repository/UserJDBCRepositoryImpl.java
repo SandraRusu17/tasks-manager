@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Slf4j
-public class UserJDBCRepositoryImpl extends DataSourceProvider implements UserRepository {
+public class UserJDBCRepositoryImpl implements UserRepository {
 
 
     private static final String DELETE_USER = "DELETE FROM users WHERE id=?";
@@ -35,7 +35,7 @@ public class UserJDBCRepositoryImpl extends DataSourceProvider implements UserRe
     @Override
     public int saveUser(User user) {
         int result = 0;
-        try (Connection connection = getMysqlConnection();
+        try (Connection connection = DataSourceProvider.getMysqlConnection();
              PreparedStatement ps = connection.prepareStatement("INSERT INTO users(firstName, lastName, userName) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, user.getFirstName());
@@ -61,7 +61,7 @@ public class UserJDBCRepositoryImpl extends DataSourceProvider implements UserRe
 
 //        User user = null;
         Optional<User> result;
-        try (Connection connection = getMysqlConnection();
+        try (Connection connection = DataSourceProvider.getMysqlConnection();
              PreparedStatement ps = connection.prepareStatement(FIND_BY_USERNAME);
              PreparedStatement ps2 = connection.prepareStatement("SELECT * FROM tasks WHERE user_id = ?")) {
 
@@ -96,7 +96,7 @@ public class UserJDBCRepositoryImpl extends DataSourceProvider implements UserRe
     @Override
     public List<User> findAllUsers() {
         List<User> users = new ArrayList<>();
-        try (Connection connection = getMysqlConnection();
+        try (Connection connection = DataSourceProvider.getMysqlConnection();
              PreparedStatement ps1 = connection.prepareStatement(FIND_ALL);
              PreparedStatement ps2 = connection.prepareStatement("SELECT * FROM tasks WHERE user_id = ?")) {
 
@@ -136,7 +136,7 @@ public class UserJDBCRepositoryImpl extends DataSourceProvider implements UserRe
 
     @Override
     public int deleteUserById(Long id) {
-        try (Connection connection = getMysqlConnection();
+        try (Connection connection = DataSourceProvider.getMysqlConnection();
              PreparedStatement ps1 = connection.prepareStatement(DELETE_USER)) {
 
             ps1.setLong(1, id);

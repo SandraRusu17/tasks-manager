@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Slf4j
-public class TaskRepositoryImpl extends DataSourceProvider implements TaskRepository {
+public class TaskRepositoryImpl  implements TaskRepository {
 
     public static TaskRepositoryImpl INSTANCE;
 
@@ -35,7 +35,7 @@ public class TaskRepositoryImpl extends DataSourceProvider implements TaskReposi
 
         int result = 0;
         User user = null;
-        try (Connection connection = getMysqlConnection();
+        try (Connection connection = DataSourceProvider.getMysqlConnection();
              PreparedStatement ps1 = connection.prepareStatement("SELECT * FROM users WHERE username=?");
              PreparedStatement ps2 = connection.prepareStatement("INSERT INTO tasks(title, description, user_id) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
 
@@ -71,7 +71,7 @@ public class TaskRepositoryImpl extends DataSourceProvider implements TaskReposi
     public List<Task> getTasksFor(String username) {
         List<Task> tasks = new ArrayList<>();
         User user = null;
-        try (Connection connection = getMysqlConnection();
+        try (Connection connection = DataSourceProvider.getMysqlConnection();
              PreparedStatement ps1 = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
              PreparedStatement ps2 = connection.prepareStatement("SELECT * FROM tasks WHERE user_id = ?")) {
 
@@ -109,7 +109,7 @@ public class TaskRepositoryImpl extends DataSourceProvider implements TaskReposi
     @Override
     public void deleteTaskByTitleFor(String taskTitle, String username) {
 
-        try (Connection connection = getMysqlConnection();
+        try (Connection connection = DataSourceProvider.getMysqlConnection();
              PreparedStatement ps1 = connection.prepareStatement("DELETE FROM tasks WHERE title = ? AND user_id in(select id from users where username = ?)")) {
 
             ps1.setString(1, taskTitle);

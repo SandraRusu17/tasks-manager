@@ -1,26 +1,22 @@
 package com.stefanini.taskmanager;
 
 //import com.stefanini.taskmanager.factory.ServiceFactory;
-import com.stefanini.taskmanager.command.AddUserCommand;
-import com.stefanini.taskmanager.command.GetAllUsersCommand;
-import com.stefanini.taskmanager.command.GetTasksCommand;
-import com.stefanini.taskmanager.command.utils.CommandParser;
-import com.stefanini.taskmanager.entity.User;
+import com.stefanini.taskmanager.command.Command;
+import com.stefanini.taskmanager.command.utils.CommandFactory;
 import com.stefanini.taskmanager.factory.ServiceFactory;
         import com.stefanini.taskmanager.service.TaskService;
 import com.stefanini.taskmanager.service.UserService;
 import com.stefanini.taskmanager.command.exceptions.InvalidCommandException;
 import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
 
-import java.util.Optional;
-
 public class App {
     public static void main(String[] args) throws UserNotFoundException, InvalidCommandException {
         UserService userService = ServiceFactory.getInstance().getUserService();
         TaskService taskService = ServiceFactory.getInstance().getTaskService();
 
+        Command command = CommandFactory.parseCommandArguments(args);
         try {
-             CommandParser.parseCommandArguments(args).execute();
+             command.execute();
         } catch (InvalidCommandException | UserNotFoundException e) {
             System.out.println(e.getMessage());
             System.exit(0);
