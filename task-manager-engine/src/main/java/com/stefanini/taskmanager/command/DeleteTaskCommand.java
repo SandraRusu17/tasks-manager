@@ -5,8 +5,8 @@ import com.stefanini.taskmanager.factory.ServiceFactory;
 import com.stefanini.taskmanager.service.TaskService;
 import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
 
-import static com.stefanini.taskmanager.command.utils.CommandParser.getTaskTitle;
-import static com.stefanini.taskmanager.command.utils.CommandParser.getUsername;
+import static com.stefanini.taskmanager.command.utils.CommandParameterParser.getTaskTitle;
+import static com.stefanini.taskmanager.command.utils.CommandParameterParser.getUsername;
 
 public class DeleteTaskCommand implements Command {
 

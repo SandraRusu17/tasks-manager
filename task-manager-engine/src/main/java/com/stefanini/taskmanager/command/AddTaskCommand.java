@@ -5,7 +5,7 @@ import com.stefanini.taskmanager.factory.ServiceFactory;
 import com.stefanini.taskmanager.service.TaskService;
 import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
 
-import static com.stefanini.taskmanager.command.utils.CommandParser.*;
+import static com.stefanini.taskmanager.command.utils.CommandParameterParser.*;
 
 public class AddTaskCommand implements Command {
     private final TaskService taskService = ServiceFactory.getInstance().getTaskService();

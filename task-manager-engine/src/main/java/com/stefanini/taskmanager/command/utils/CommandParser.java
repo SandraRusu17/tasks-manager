@@ -1,46 +1,48 @@
 package com.stefanini.taskmanager.command.utils;
 
+import com.stefanini.taskmanager.command.*;
 import com.stefanini.taskmanager.command.exceptions.InvalidCommandException;
+import lombok.extern.slf4j.Slf4j;
 
-import java.util.Arrays;
-
+@Slf4j
 public class CommandParser {
-    public static String getUsername(String[] commandParameters) throws InvalidCommandException {
-        return getParameterValue(commandParameters, "un");
-    }
 
-    public static String getFirstName(String[] commandParameters) throws InvalidCommandException {
-        return getParameterValue(commandParameters, "fn");
-    }
+    //    -createUser -fn='FirstName' -ln='LastName' -un='UserName'
+    public static final String CREATE_USER_COMMAND = "-createUser";
+    //    -showAllUsers
+    public static final String SHOW_ALL_USERS_COMMAND = "-showAllUsers";
+    //    -addTask -un='UserName' -tt='TaskTitle' -td='TaskDescription'
+    public static final String ADD_TASK_FOR_COMMAND = "-addTask";
+    //    -showTasks -un='UserName'
+    public static final String SHOW_TASKS_FOR_COMMAND = "-showTasks";
+    //    -deleteTask -un='UserName' -tt='TaskTitle'
+    public static final String DELETE_TASK_BY_TITLE_FOR_COMMAND = "-deleteTask";
 
-    public static String getLastName(String[] commandParameters) throws InvalidCommandException {
-        return getParameterValue(commandParameters, "ln");
-    }
+    public static final int COMMAND = 0;
 
-    public static String getTaskDescription(String[] commandParameters) throws InvalidCommandException {
-        return getParameterValue(commandParameters, "td");
-    }
 
-    public static String getTaskTitle(String[] commandParameters) throws InvalidCommandException {
-        return getParameterValue(commandParameters, "tt");
-    }
+    public static Command parseCommandArguments(String[] arguments) throws InvalidCommandException {
+        String joinedArguments = String.join(" ", arguments); //so we can have arguments with spaces
+        String[] commandAndParameters = joinedArguments.split(" -"); //split by ' -' again so we have the command and its parameters
+        final String command = commandAndParameters[COMMAND];
 
-    public static String getParameterValue(String[] commandParameters, String commandName) throws InvalidCommandException {
-        final String parameterValue = Arrays.stream(commandParameters)
-                .filter(parameter -> parameter.startsWith(commandName))
-                .findFirst()
-                .orElseThrow(() -> new InvalidCommandException(
-                        "Oops. Parameter [-" + commandName + "] not found in " + Arrays.toString(commandParameters)));
-        return getStringValue(parameterValue);
-    }
+              switch (command) {
+                case CREATE_USER_COMMAND:
+                    return new AddUserCommand(commandAndParameters);
 
-    private static String getStringValue(String s) throws InvalidCommandException {
-        int startIndexOfQuote = s.indexOf('\'');
-        int endIndexOfQuote = s.lastIndexOf('\'');
-        if ((startIndexOfQuote == -1 || endIndexOfQuote == -1) || (startIndexOfQuote  == endIndexOfQuote)) {
-            throw new InvalidCommandException("Oops. Invalid parameter [" + s + "] please refer to the usage of the command : -command -un='param'." +
-                    "Every parameter must be enclosed in single quotes.");
+                case SHOW_ALL_USERS_COMMAND:
+                    return new GetAllUsersCommand();
+
+                case ADD_TASK_FOR_COMMAND:
+                    return new AddTaskCommand(commandAndParameters);
+
+                case DELETE_TASK_BY_TITLE_FOR_COMMAND:
+                    return new DeleteTaskCommand(commandAndParameters);
+
+                case SHOW_TASKS_FOR_COMMAND:
+                    return new GetTasksCommand(commandAndParameters);
+                  default:
+                      throw new InvalidCommandException("Oops. Unknown command [" + command + "] Please use one of the following commands: -createUser -showAllUsers -addTask");
+            }
         }
-        return s.substring(startIndexOfQuote + 1, endIndexOfQuote);
     }
-}

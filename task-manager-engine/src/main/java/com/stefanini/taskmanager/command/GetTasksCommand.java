@@ -1,7 +1,7 @@
 package com.stefanini.taskmanager.command;
 
 import com.stefanini.taskmanager.command.exceptions.InvalidCommandException;
-import com.stefanini.taskmanager.command.utils.CommandParser;
+import com.stefanini.taskmanager.command.utils.CommandParameterParser;
 import com.stefanini.taskmanager.factory.ServiceFactory;
 import com.stefanini.taskmanager.service.TaskService;
 import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
@@ -22,7 +22,7 @@ public class GetTasksCommand implements Command {
             throw new InvalidCommandException(
                     "Oops. Please refer to the usage of the command : -showTasks -un='UserName'");
         }
-        final String username = CommandParser.getUsername(commandAndParameters);
+        final String username = CommandParameterParser.getUsername(commandAndParameters);
         System.out.println("All tasks for [" + username + "] :");
         taskService.getTasksFor(username).forEach(System.out::println);
     }

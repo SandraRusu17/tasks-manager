@@ -5,7 +5,7 @@ import com.stefanini.taskmanager.entity.User;
 import com.stefanini.taskmanager.factory.ServiceFactory;
 import com.stefanini.taskmanager.service.UserService;
 
-import static com.stefanini.taskmanager.command.utils.CommandParser.*;
+import static com.stefanini.taskmanager.command.utils.CommandParameterParser.*;
 
 public class AddUserCommand implements Command {
 
