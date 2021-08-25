@@ -65,20 +65,31 @@ public class UserJDBCRepositoryImpl implements UserRepository {
     public Optional<User> findByUsername(String username) {
 
 //        User user = null;
-        Optional<User> user;
+        Optional<User> result;
         try (Connection connection = DriverManager.getConnection(URL + DATABASE, USERNAME, PASSWORD);
-             PreparedStatement ps = connection.prepareStatement(FIND_BY_USERNAME)) {
+             PreparedStatement ps = connection.prepareStatement(FIND_BY_USERNAME);
+             PreparedStatement ps2 = connection.prepareStatement("SELECT * FROM tasks WHERE user_id = ?")) {
 
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                user = Optional.of(new User(rs.getLong("id"),
-                        rs.getString("firstName"),
-                        rs.getString("lastName"),
-                        rs.getString("userName")));
+                final User user = new User(rs.getLong("id"),
+                                                       rs.getString("firstName"),
+                                                       rs.getString("lastName"),
+                                                       rs.getString("userName"));
+                result = Optional.of(user);
+                ps2.setLong(1, user.getId());
 
-                return user;
+                try(ResultSet r2 = ps2.executeQuery()) {
+                    while (r2.next()) {
+                        Task task = new Task(r2.getString("title"),
+                                r2.getString("description"));
+                        task.setId(r2.getLong("id"));
+                        user.addTask(task);
+                    }
+                }
+                return result;
             } else {
                 return Optional.empty();
             }
@@ -110,6 +121,7 @@ public class UserJDBCRepositoryImpl implements UserRepository {
                     while (r2.next()) {
                         Task task = new Task(r2.getString("title"),
                                             r2.getString("description"));
+                        task.setId(r2.getLong("id"));
                         user.addTask(task);
                     }
 

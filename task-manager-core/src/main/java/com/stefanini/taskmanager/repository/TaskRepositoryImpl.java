@@ -41,7 +41,7 @@ public class TaskRepositoryImpl implements TaskRepository {
         User user = null;
         try (Connection connection = DriverManager.getConnection(URL + DATABASE, USERNAME, PASSWORD);
              PreparedStatement ps1 = connection.prepareStatement("SELECT * FROM users WHERE username=?");
-             PreparedStatement ps2 = connection.prepareStatement("INSERT INTO tasks(title, description, user_id) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS)){
+             PreparedStatement ps2 = connection.prepareStatement("INSERT INTO tasks(title, description, user_id) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
 
             ps1.setString(1, username);
 
@@ -52,9 +52,10 @@ public class TaskRepositoryImpl implements TaskRepository {
                             r.getString("lastName"),
                             r.getString("userName"));
                 }
+                assert user != null;
                 ps2.setLong(3, user.getId());
-                ps2.setString(1,task.getTitle());
-                ps2.setString(2,task.getDescription());
+                ps2.setString(1, task.getTitle());
+                ps2.setString(2, task.getDescription());
                 result = ps2.executeUpdate();
 
                 try (ResultSet generatedKeys = ps2.getGeneratedKeys()) {
@@ -64,7 +65,7 @@ public class TaskRepositoryImpl implements TaskRepository {
             }
             user.addTask(task);
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             log.error("Something bad happened during fetching a task with username = {}", username, e);
         }
         return result;
@@ -93,7 +94,8 @@ public class TaskRepositoryImpl implements TaskRepository {
                 try (ResultSet r2 = ps2.executeQuery()) {
                     while (r2.next()) {
                         Task task = new Task(r2.getString("title"),
-                                             r2.getString("description"));
+                                r2.getString("description"));
+                        task.setId(r2.getLong("id"));
                         user.addTask(task);
                         tasks.add(task);
                     }
@@ -112,12 +114,11 @@ public class TaskRepositoryImpl implements TaskRepository {
     public void deleteTaskByTitleFor(String taskTitle, String username) {
 
         try (Connection connection = DriverManager.getConnection(URL + DATABASE, USERNAME, PASSWORD);
-             PreparedStatement ps1 = connection.prepareStatement("DELETE FROM tasks WHERE title = ? AND user_id in(select id from users where username = ?"))
-             {
+             PreparedStatement ps1 = connection.prepareStatement("DELETE FROM tasks WHERE title = ? AND user_id in(select id from users where username = ?)")) {
 
-                ps1.setString(1, taskTitle);
-                ps1.setString(2, username);
-                ps1.executeUpdate();
+            ps1.setString(1, taskTitle);
+            ps1.setString(2, username);
+            ps1.executeUpdate();
 
 
         } catch (SQLException e) {
