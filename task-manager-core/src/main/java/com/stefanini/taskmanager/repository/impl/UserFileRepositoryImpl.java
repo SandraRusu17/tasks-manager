@@ -1,4 +1,4 @@
-package com.stefanini.taskmanager.repository;
+package com.stefanini.taskmanager.repository.impl;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -11,7 +11,10 @@ import java.util.ListIterator;
 import java.util.Optional;
 
 import com.stefanini.taskmanager.entity.User;
+import com.stefanini.taskmanager.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class UserFileRepositoryImpl implements UserRepository {
 
     public static UserFileRepositoryImpl INSTANCE;
@@ -39,7 +42,7 @@ public class UserFileRepositoryImpl implements UserRepository {
             users.add(user);
             oos.writeObject(users);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Something bad happened during fetching user = {} ", user, e);
             return 0;
         }
         return 1;
@@ -61,7 +64,6 @@ public class UserFileRepositoryImpl implements UserRepository {
         ) {
             return (List<User>) oos.readObject();
         } catch (Exception e) {
-            //first time usage
             return new ArrayList<>();
         }
     }
@@ -81,7 +83,7 @@ public class UserFileRepositoryImpl implements UserRepository {
             }
             oos.writeObject(users);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Something bad happened during fetching users = {} ", users, e);
         }
     }
 

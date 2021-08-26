@@ -1,6 +1,6 @@
 package com.stefanini.taskmanager.command;
 
-import com.stefanini.taskmanager.factory.ServiceFactory;
+import com.stefanini.taskmanager.service.ServiceFactory;
 import com.stefanini.taskmanager.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 

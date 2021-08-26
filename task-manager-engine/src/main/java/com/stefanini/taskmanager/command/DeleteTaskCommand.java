@@ -1,13 +1,10 @@
 package com.stefanini.taskmanager.command;
 
 import com.stefanini.taskmanager.command.exceptions.InvalidCommandException;
-import com.stefanini.taskmanager.factory.ServiceFactory;
+import com.stefanini.taskmanager.service.ServiceFactory;
 import com.stefanini.taskmanager.service.TaskService;
 import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
-
-import static com.stefanini.taskmanager.command.utils.CommandParameterParser.getTaskTitle;
-import static com.stefanini.taskmanager.command.utils.CommandParameterParser.getUsername;
 
 
 @Slf4j

@@ -1,15 +1,13 @@
-package com.stefanini.taskmanager.service;
+package com.stefanini.taskmanager.service.impl;
 
 import java.util.List;
 
 import com.stefanini.taskmanager.entity.Task;
-import com.stefanini.taskmanager.entity.User;
 import com.stefanini.taskmanager.repository.TaskRepository;
+import com.stefanini.taskmanager.service.TaskService;
 import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Slf4j
 public class TaskServiceImpl implements TaskService {

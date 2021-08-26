@@ -1,12 +1,9 @@
-package com.stefanini.taskmanager.factory;
+package com.stefanini.taskmanager.service;
 
 
-import com.stefanini.taskmanager.repository.TaskRepository;
-import com.stefanini.taskmanager.repository.UserRepository;
-import com.stefanini.taskmanager.service.TaskService;
-import com.stefanini.taskmanager.service.TaskServiceImpl;
-import com.stefanini.taskmanager.service.UserService;
-import com.stefanini.taskmanager.service.UserServiceImpl;
+import com.stefanini.taskmanager.repository.RepositoryFactory;
+import com.stefanini.taskmanager.service.impl.TaskServiceImpl;
+import com.stefanini.taskmanager.service.impl.UserServiceImpl;
 
 public class ServiceFactory {
     private static ServiceFactory INSTANCE;

@@ -1,4 +1,4 @@
-package com.stefanini.taskmanager.repository;
+package com.stefanini.taskmanager.repository.impl;
 
 import com.stefanini.taskmanager.entity.Task;
 import com.stefanini.taskmanager.entity.User;
@@ -7,21 +7,21 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.stefanini.taskmanager.repository.DataSourceProvider;
+import com.stefanini.taskmanager.repository.TaskRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Slf4j
-public class TaskRepositoryImpl  implements TaskRepository {
+public class TaskJDBCRepositoryImpl implements TaskRepository {
 
-    public static TaskRepositoryImpl INSTANCE;
+    public static TaskJDBCRepositoryImpl INSTANCE;
 
-    private TaskRepositoryImpl() {
+    private TaskJDBCRepositoryImpl() {
     }
 
-    public static TaskRepositoryImpl getInstance() {
+    public static TaskJDBCRepositoryImpl getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new TaskRepositoryImpl();
+            INSTANCE = new TaskJDBCRepositoryImpl();
         }
 
         return INSTANCE;

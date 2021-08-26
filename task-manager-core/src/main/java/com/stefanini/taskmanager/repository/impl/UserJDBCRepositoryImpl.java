@@ -1,7 +1,9 @@
-package com.stefanini.taskmanager.repository;
+package com.stefanini.taskmanager.repository.impl;
 
 import com.stefanini.taskmanager.entity.Task;
 import com.stefanini.taskmanager.entity.User;
+import com.stefanini.taskmanager.repository.DataSourceProvider;
+import com.stefanini.taskmanager.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;
@@ -50,7 +52,7 @@ public class UserJDBCRepositoryImpl implements UserRepository {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Something bad happened during fetching user = {} ", user, e);
         }
         return result;
     }
