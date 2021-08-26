@@ -4,10 +4,13 @@ import com.stefanini.taskmanager.command.exceptions.InvalidCommandException;
 import com.stefanini.taskmanager.factory.ServiceFactory;
 import com.stefanini.taskmanager.service.TaskService;
 import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 
 import static com.stefanini.taskmanager.command.utils.CommandParameterParser.getTaskTitle;
 import static com.stefanini.taskmanager.command.utils.CommandParameterParser.getUsername;
 
+
+@Slf4j
 public class DeleteTaskCommand implements Command {
     private String taskTitle;
     private String username;
@@ -24,6 +27,6 @@ public class DeleteTaskCommand implements Command {
     @Override
     public void execute() throws UserNotFoundException, InvalidCommandException {
         taskService.deleteTaskByTitleFor(taskTitle, username);
-        System.out.println("Task [" + taskTitle + "] deleted successfully");
+        log.info("Task [" + taskTitle + "] deleted successfully");
     }
 }

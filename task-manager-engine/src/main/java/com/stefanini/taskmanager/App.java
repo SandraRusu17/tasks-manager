@@ -8,7 +8,9 @@ import com.stefanini.taskmanager.factory.ServiceFactory;
 import com.stefanini.taskmanager.service.UserService;
 import com.stefanini.taskmanager.command.exceptions.InvalidCommandException;
 import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class App {
     public static void main(String[] args) throws UserNotFoundException, InvalidCommandException {
         UserService userService = ServiceFactory.getInstance().getUserService();
@@ -18,7 +20,7 @@ public class App {
         try {
              command.execute();
         } catch (InvalidCommandException | UserNotFoundException e) {
-            System.out.println(e.getMessage());
+            log.error("Something bad happened during entering command",e.getMessage());
             System.exit(0);
         }
 
@@ -35,8 +37,6 @@ public class App {
 //        userService.getAllUsers().forEach(u -> System.out.println(u));
 
 
-
-
 //        //delete user by id
 //        userService.deleteUserById(2L);
 //
@@ -46,9 +46,6 @@ public class App {
 //        Optional<User> userByUsername = userService.findByUsername(username);
 //        userByUsername.ifPresent(System.out::println);
 //
-
-
-
 //        // add a user
 //        User user = new User("fffffffffffff","iiiii","iiiii");
 //        userService.saveUser(user);

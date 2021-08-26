@@ -4,9 +4,11 @@ import com.stefanini.taskmanager.command.exceptions.InvalidCommandException;
 import com.stefanini.taskmanager.factory.ServiceFactory;
 import com.stefanini.taskmanager.service.TaskService;
 import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 
 import static com.stefanini.taskmanager.command.utils.CommandParameterParser.*;
 
+@Slf4j
 public class AddTaskCommand implements Command {
 
     private String taskTitle;
@@ -27,7 +29,7 @@ public class AddTaskCommand implements Command {
     public void execute() throws UserNotFoundException, InvalidCommandException {
 
         taskService.addTaskFor(taskTitle, taskDescription, username);
-        System.out.println("Task [" + taskTitle + "] created successfully");
+        log.info("Task [" + taskTitle + "] created successfully");
     }
 }
 

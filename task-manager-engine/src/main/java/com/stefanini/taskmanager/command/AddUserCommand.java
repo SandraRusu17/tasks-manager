@@ -4,9 +4,12 @@ import com.stefanini.taskmanager.command.exceptions.InvalidCommandException;
 import com.stefanini.taskmanager.entity.User;
 import com.stefanini.taskmanager.factory.ServiceFactory;
 import com.stefanini.taskmanager.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 
 import static com.stefanini.taskmanager.command.utils.CommandParameterParser.*;
 
+
+@Slf4j
 public class AddUserCommand implements Command {
 
     private String username;
@@ -26,6 +29,6 @@ public class AddUserCommand implements Command {
     public void execute() throws InvalidCommandException {
         final User user = new User(username, firstName, lastName);
         userService.saveUser(user);
-        System.out.println(user + "created successfully");
+        log.info(user + "created successfully");
     }
 }
