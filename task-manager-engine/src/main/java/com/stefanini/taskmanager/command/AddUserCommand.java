@@ -9,21 +9,22 @@ import static com.stefanini.taskmanager.command.utils.CommandParameterParser.*;
 
 public class AddUserCommand implements Command {
 
-    private UserService userService = ServiceFactory.getInstance().getUserService();
-    private String[] commandAndParameters;
+    private String username;
+    private String firstName;
+    private String lastName;
 
-   public AddUserCommand(final String[] commandParameters) {
-       this.commandAndParameters = commandParameters;
-   }
+    private UserService userService = ServiceFactory.getInstance().getUserService();
+
+    public AddUserCommand(String username, String firstName, String lastName) {
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
 
     @Override
     public void execute() throws InvalidCommandException {
-        if ( commandAndParameters.length < 4) {
-            throw new InvalidCommandException("Oops. Please refer to the usage of the command : " + "-createUser -fn='FirstName' -ln='LastName' -un='UserName'");
-        }
-        final User user = new User(getUsername(commandAndParameters),
-                                    getFirstName(commandAndParameters),
-                                    getLastName(commandAndParameters));
+        final User user = new User(username, firstName, lastName);
         userService.saveUser(user);
         System.out.println(user + "created successfully");
     }

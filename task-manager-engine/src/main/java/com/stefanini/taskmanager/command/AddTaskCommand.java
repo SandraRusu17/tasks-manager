@@ -8,24 +8,26 @@ import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
 import static com.stefanini.taskmanager.command.utils.CommandParameterParser.*;
 
 public class AddTaskCommand implements Command {
+
+    private String taskTitle;
+    private String taskDescription;
+    private String username;
+
+    public AddTaskCommand(String taskTitle, String taskDescription, String username) {
+        this.taskTitle = taskTitle;
+        this.taskDescription = taskDescription;
+        this.username = username;
+    }
+
+
     private final TaskService taskService = ServiceFactory.getInstance().getTaskService();
 
-    private final String[] commandAndParameters;
-
-    public AddTaskCommand(final String[] commandAndParameters) {
-        this.commandAndParameters = commandAndParameters;
-    }
 
     @Override
     public void execute() throws UserNotFoundException, InvalidCommandException {
-        if (commandAndParameters.length < 4) {
-            throw new InvalidCommandException(
-                    "Oops. Please refer to the usage of the command : -addTask -un='UserName' -tt='TaskTitle' -td='TaskDescription'");
-        }
-        taskService.addTaskFor( getTaskTitle(commandAndParameters),
-                                getTaskDescription(commandAndParameters),
-                                getUsername(commandAndParameters));
-        System.out.println("Task [" + getTaskTitle(commandAndParameters) + "] created successfully");
-        }
+
+        taskService.addTaskFor(taskTitle, taskDescription, username);
+        System.out.println("Task [" + taskTitle + "] created successfully");
     }
+}
 

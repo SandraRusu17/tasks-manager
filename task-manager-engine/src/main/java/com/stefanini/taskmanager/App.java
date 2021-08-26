@@ -2,7 +2,7 @@ package com.stefanini.taskmanager;
 
 //import com.stefanini.taskmanager.factory.ServiceFactory;
 import com.stefanini.taskmanager.command.Command;
-import com.stefanini.taskmanager.command.utils.CommandFactory;
+import com.stefanini.taskmanager.command.CommandFactory;
 import com.stefanini.taskmanager.factory.ServiceFactory;
         import com.stefanini.taskmanager.service.TaskService;
 import com.stefanini.taskmanager.service.UserService;
