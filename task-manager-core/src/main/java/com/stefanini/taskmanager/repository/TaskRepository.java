@@ -29,6 +29,5 @@ public interface TaskRepository {
      * @param task -a <code>Task</code> representing the task which will be added
      * @param username -a <code>String</code> representing the username of the user, for whom the task will be added
      */
-    int saveTaskFor(Task task, String username);
-
+    void saveTaskFor(Task task, String username);
 }

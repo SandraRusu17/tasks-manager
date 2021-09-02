@@ -1,7 +1,8 @@
 package com.stefanini.taskmanager.repository;
 
+import com.stefanini.taskmanager.repository.impl.TaskHibernateRepositoryImpl;
 import com.stefanini.taskmanager.repository.impl.TaskJDBCRepositoryImpl;
-import com.stefanini.taskmanager.repository.impl.UserJDBCRepositoryImpl;
+import com.stefanini.taskmanager.repository.impl.UserHibernateRepositoryImpl;
 
 public class RepositoryFactory {
     private static RepositoryFactory INSTANCE;
@@ -19,11 +20,11 @@ public class RepositoryFactory {
 
     public UserRepository getUserRepository(){
 //        return UserFileRepositoryImpl.getInstance();
-        return UserJDBCRepositoryImpl.getInstance();
+        return UserHibernateRepositoryImpl.getInstance();
     }
 
     public TaskRepository getTaskRepository(){
 //        return UserFileRepositoryImpl.getInstance();
-        return TaskJDBCRepositoryImpl.getInstance();
+        return TaskHibernateRepositoryImpl.getInstance();
     }
 }

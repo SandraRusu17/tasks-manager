@@ -13,7 +13,7 @@ public interface UserRepository {
      *
      * @param user -(User) the user with firstName, lastName and username
      */
-    int saveUser(User user);
+    void saveUser(User user);
 
     /**
      * Returns a user, by his username
@@ -32,10 +32,10 @@ public interface UserRepository {
     /**
      * Deletes an user by his id
      *
-     * @param id -(Long) the user's id
+     * @param username -(String) the user's username
      * @return
      */
-    int deleteUserById(Long id);
+    void deleteUserByUsername(String username);
 
 
 

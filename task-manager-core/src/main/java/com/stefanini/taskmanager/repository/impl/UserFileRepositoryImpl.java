@@ -33,7 +33,7 @@ public class UserFileRepositoryImpl implements UserRepository {
     public static final String FILE_LOCATION = "taskmanager.ser";
 
     @Override
-    public int saveUser(final User user) {
+    public void saveUser(final User user) {
         try (
                 FileOutputStream fout = new FileOutputStream(FILE_LOCATION);
                 ObjectOutputStream oos = new ObjectOutputStream(fout)
@@ -43,9 +43,7 @@ public class UserFileRepositoryImpl implements UserRepository {
             oos.writeObject(users);
         } catch (IOException e) {
             log.error("Something bad happened during fetching user = {} ", user, e);
-            return 0;
         }
-        return 1;
     }
 
     @Override
@@ -88,7 +86,7 @@ public class UserFileRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public int deleteUserById(final Long id) {
+    public void deleteUserByUsername(final String username) {
         throw new UnsupportedOperationException();
     }
 }

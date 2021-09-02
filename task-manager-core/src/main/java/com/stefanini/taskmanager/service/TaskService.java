@@ -34,7 +34,7 @@ public interface TaskService {
      * @param username a <code>String</code> representing the username of the user, for whom the task will be added
      * @throws UserNotFoundException when the user is not found, this exception is thrown
      */
-    int addTaskFor(String taskTitle, String taskDescription, String username) throws UserNotFoundException;
+    void addTaskFor(String taskTitle, String taskDescription, String username) throws UserNotFoundException;
 
 
 }

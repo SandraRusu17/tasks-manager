@@ -15,7 +15,7 @@ import java.util.Optional;
 public class UserJDBCRepositoryImpl implements UserRepository {
 
 
-    private static final String DELETE_USER = "DELETE FROM users WHERE id=?";
+    private static final String DELETE_USER = "DELETE FROM users WHERE userName=?";
     private static final String FIND_BY_USERNAME = "SELECT * FROM users WHERE userName=?";
     private static final String FIND_ALL = "SELECT * FROM users ORDER BY id";
 
@@ -35,15 +35,14 @@ public class UserJDBCRepositoryImpl implements UserRepository {
 
 
     @Override
-    public int saveUser(User user) {
-        int result = 0;
+    public void saveUser(User user) {
         try (Connection connection = DataSourceProvider.getMysqlConnection();
              PreparedStatement ps = connection.prepareStatement("INSERT INTO users(firstName, lastName, userName) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, user.getFirstName());
             ps.setString(2, user.getLastName());
             ps.setString(3, user.getUserName());
-            result = ps.executeUpdate();
+            ps.executeUpdate();
 
             try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
 
@@ -54,14 +53,12 @@ public class UserJDBCRepositoryImpl implements UserRepository {
         } catch (SQLException e) {
             log.error("Something bad happened during fetching user = {} ", user, e);
         }
-        return result;
     }
 
 
     @Override
     public Optional<User> findByUsername(String username) {
 
-//        User user = null;
         Optional<User> result;
         try (Connection connection = DataSourceProvider.getMysqlConnection();
              PreparedStatement ps = connection.prepareStatement(FIND_BY_USERNAME);
@@ -71,7 +68,7 @@ public class UserJDBCRepositoryImpl implements UserRepository {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                final User user = new User(rs.getLong("id"),
+                final User user = new User(
                         rs.getString("firstName"),
                         rs.getString("lastName"),
                         rs.getString("userName"));
@@ -104,7 +101,7 @@ public class UserJDBCRepositoryImpl implements UserRepository {
 
             try (ResultSet r = ps1.executeQuery()) {
                 while (r.next()) {
-                    User user = new User(r.getLong("id"),
+                    User user = new User(
                             r.getString("firstName"),
                             r.getString("lastName"),
                             r.getString("userName"));
@@ -137,17 +134,16 @@ public class UserJDBCRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public int deleteUserById(Long id) {
+    public void deleteUserByUsername(String username) {
         try (Connection connection = DataSourceProvider.getMysqlConnection();
              PreparedStatement ps1 = connection.prepareStatement(DELETE_USER)) {
 
-            ps1.setLong(1, id);
-            return ps1.executeUpdate();
+            ps1.setString(1, username);
+            ps1.executeUpdate();
 
         } catch (SQLException e) {
-            log.error("Something bad happened during fetching a user with id = {} ", id, e);
+            log.error("Something bad happened during fetching a user with userName = {} ", username, e);
         }
-        return 0;
     }
 
 

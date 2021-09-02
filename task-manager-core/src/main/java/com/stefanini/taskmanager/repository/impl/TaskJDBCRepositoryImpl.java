@@ -31,7 +31,7 @@ public class TaskJDBCRepositoryImpl implements TaskRepository {
 
 
     @Override
-    public int saveTaskFor(Task task, String username) {
+    public void saveTaskFor(Task task, String username) {
 
         int result = 0;
         User user = null;
@@ -43,7 +43,7 @@ public class TaskJDBCRepositoryImpl implements TaskRepository {
 
             try (ResultSet r = ps1.executeQuery()) {
                 while (r.next()) {
-                    user = new User(r.getLong("id"),
+                    user = new User(
                             r.getString("firstName"),
                             r.getString("lastName"),
                             r.getString("userName"));
@@ -64,7 +64,6 @@ public class TaskJDBCRepositoryImpl implements TaskRepository {
         } catch (SQLException e) {
             log.error("Something bad happened during fetching a task with username = {}", username, e);
         }
-        return result;
     }
 
     @Override
@@ -79,7 +78,7 @@ public class TaskJDBCRepositoryImpl implements TaskRepository {
 
             try (ResultSet r = ps1.executeQuery()) {
                 while (r.next()) {
-                    user = new User(r.getLong("id"),
+                    user = new User(
                             r.getString("firstName"),
                             r.getString("lastName"),
                             r.getString("userName"));

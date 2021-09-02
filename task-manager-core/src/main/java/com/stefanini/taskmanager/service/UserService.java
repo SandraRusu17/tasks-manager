@@ -15,7 +15,7 @@ public interface UserService {
      * @param user - a <code>User</code>  representing the user with firstName, lastName and username
      * @return the saved user
      */
-    int saveUser(User user);
+    void saveUser(User user);
 
     /**
      * Returns a user, by his username
@@ -27,13 +27,13 @@ public interface UserService {
 
 
     /**
-     * Deletes an user by his id
+     * Deletes an user by his username
      *
-     * @param id - a <code>Long</code> representing the user's id
+     * @param username- a <code>String</code> representing the user's username
      * @return int the operation is executed
      */
     //one more logical feature
-    int deleteUserById(Long id) throws UserNotFoundException;
+    void deleteUserByUsername(String username) throws UserNotFoundException;
 
 
     /**
