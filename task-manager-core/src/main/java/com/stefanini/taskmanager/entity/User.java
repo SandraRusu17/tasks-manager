@@ -32,13 +32,13 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "userName", unique = true, length = 50)
+    @Column(name = "user_name", unique = true, length = 50)
     private String userName;
 
-    @Column(name = "firstName", length = 50)
+    @Column(name = "first_name", length = 50)
     private String firstName;
 
-    @Column(name = "lastName", length = 50)
+    @Column(name = "last_name", length = 50)
     private String lastName;
 
 
@@ -56,6 +56,19 @@ public class User implements Serializable {
     protected User() {
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final User user = (User) o;
+        return id != null && Objects.equals(id, user.id);
+    }
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userName);
+    }
 
     public void addTask(Task task) {
         tasks.add(task);
@@ -67,7 +80,7 @@ public class User implements Serializable {
         task.getUsers().remove(this);
     }
 
-    public String getFormattedDetails() {
+    public String toString() {
         return "User {" + firstName +
                 ", " + lastName +
                 ", nr. of tasks=" + tasks.size() +

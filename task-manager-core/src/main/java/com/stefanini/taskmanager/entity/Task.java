@@ -36,10 +36,10 @@ public class Task implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "taskTitle", length = 100)
+    @Column(name = "task_title", length = 100)
     private String title;
 
-    @Column(name = "taskDescription", length = 100)
+    @Column(name = "task_description", length = 100)
     private String description;
 
 
@@ -62,6 +62,19 @@ public class Task implements Serializable {
         user.getTasks().remove(this);
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final Task task = (Task) o;
+        return id != null && Objects.equals(id, task.id);
+    }
+
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 
     public String toString() {
         return "Task{" +
