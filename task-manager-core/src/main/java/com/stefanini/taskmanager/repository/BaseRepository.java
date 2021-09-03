@@ -59,7 +59,6 @@ public abstract class BaseRepository<T, ID> implements AbstractRepository<T, ID>
         try {
             this.entityManager.remove(this.entityManager.merge(entity));
             this.entityManager.getTransaction().commit();
-
         } catch (Exception e) {
             log.info("Something bad happened during fetching an entity");
         }
@@ -79,10 +78,8 @@ public abstract class BaseRepository<T, ID> implements AbstractRepository<T, ID>
     @Override
     public Optional<T> getById(ID id) {
         checkTransaction();
-
         final T entity = entityManager.find(type, id);
         this.entityManager.getTransaction().commit();
-
         return Optional.ofNullable(entity);
     }
 
