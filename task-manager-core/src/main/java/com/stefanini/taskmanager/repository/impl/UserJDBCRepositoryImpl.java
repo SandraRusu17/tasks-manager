@@ -35,15 +35,14 @@ public class UserJDBCRepositoryImpl implements UserRepository {
 
 
     @Override
-    public int saveUser(User user) {
-        int result = 0;
+    public void saveUser(User user) {
         try (Connection connection = DataSourceProvider.getMysqlConnection();
              PreparedStatement ps = connection.prepareStatement("INSERT INTO users(firstName, lastName, userName) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, user.getFirstName());
             ps.setString(2, user.getLastName());
             ps.setString(3, user.getUserName());
-            result = ps.executeUpdate();
+            ps.executeUpdate();
 
             try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
 
@@ -54,29 +53,27 @@ public class UserJDBCRepositoryImpl implements UserRepository {
         } catch (SQLException e) {
             log.error("Something bad happened during fetching user = {} ", user, e);
         }
-        return result;
     }
 
-
     @Override
-    public Optional<User> findByUsername(String username) {
+    public Optional<User> findById(Long id) {
 
-//        User user = null;
         Optional<User> result;
         try (Connection connection = DataSourceProvider.getMysqlConnection();
-             PreparedStatement ps = connection.prepareStatement(FIND_BY_USERNAME);
+             PreparedStatement ps = connection.prepareStatement("SELECT * FROM users WHERE id = ?");
              PreparedStatement ps2 = connection.prepareStatement("SELECT * FROM tasks WHERE user_id = ?")) {
 
-            ps.setString(1, username);
+            ps.setLong(1, id);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                final User user = new User(rs.getLong("id"),
+                final User user = new User(
                         rs.getString("firstName"),
                         rs.getString("lastName"),
                         rs.getString("userName"));
                 result = Optional.of(user);
-                ps2.setLong(1, user.getId());
+
+                ps2.setLong(1, id);
 
                 try (ResultSet r2 = ps2.executeQuery()) {
                     while (r2.next()) {
@@ -96,6 +93,43 @@ public class UserJDBCRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public User findByUsername(String username) {
+
+        User result;
+        try (Connection connection = DataSourceProvider.getMysqlConnection();
+             PreparedStatement ps = connection.prepareStatement(FIND_BY_USERNAME);
+             PreparedStatement ps2 = connection.prepareStatement("SELECT * FROM tasks WHERE user_id = ?")) {
+
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                final User user = new User(
+                        rs.getString("firstName"),
+                        rs.getString("lastName"),
+                        rs.getString("userName"));
+                result = user;
+                ps2.setLong(1, user.getId());
+
+                try (ResultSet r2 = ps2.executeQuery()) {
+                    while (r2.next()) {
+                        Task task = new Task(r2.getString("title"),
+                                r2.getString("description"));
+                        task.setId(r2.getLong("id"));
+                        user.addTask(task);
+                    }
+                }
+                return result;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    @Override
     public List<User> findAllUsers() {
         List<User> users = new ArrayList<>();
         try (Connection connection = DataSourceProvider.getMysqlConnection();
@@ -104,7 +138,7 @@ public class UserJDBCRepositoryImpl implements UserRepository {
 
             try (ResultSet r = ps1.executeQuery()) {
                 while (r.next()) {
-                    User user = new User(r.getLong("id"),
+                    User user = new User(
                             r.getString("firstName"),
                             r.getString("lastName"),
                             r.getString("userName"));
@@ -132,22 +166,19 @@ public class UserJDBCRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void update(User user) {
-
-    }
+    public void update(User user) {}
 
     @Override
-    public int deleteUserById(Long id) {
+    public void deleteUserById(Long id) {
         try (Connection connection = DataSourceProvider.getMysqlConnection();
              PreparedStatement ps1 = connection.prepareStatement(DELETE_USER)) {
 
             ps1.setLong(1, id);
-            return ps1.executeUpdate();
+            ps1.executeUpdate();
 
         } catch (SQLException e) {
-            log.error("Something bad happened during fetching a user with id = {} ", id, e);
+            log.error("Something bad happened during fetching a user with userName = {} ", id, e);
         }
-        return 0;
     }
 
 

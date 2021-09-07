@@ -1,6 +1,5 @@
 package com.stefanini.taskmanager.command;
 
-import com.stefanini.taskmanager.command.exceptions.InvalidCommandException;
 import com.stefanini.taskmanager.service.ServiceFactory;
 import com.stefanini.taskmanager.service.TaskService;
 import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
@@ -15,7 +14,7 @@ public class GetTasksCommand implements Command {
     private final TaskService taskService = ServiceFactory.getInstance().getTaskService();
 
     @Override
-    public void execute() throws UserNotFoundException, InvalidCommandException {
+    public void execute() throws UserNotFoundException{
 
         System.out.println("All tasks for [" + username + "] :");
         taskService.getTasksFor(username).forEach(System.out::println);

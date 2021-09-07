@@ -1,6 +1,5 @@
 package com.stefanini.taskmanager.command;
 
-import com.stefanini.taskmanager.command.exceptions.InvalidCommandException;
 import com.stefanini.taskmanager.entity.User;
 import com.stefanini.taskmanager.service.ServiceFactory;
 import com.stefanini.taskmanager.service.UserService;
@@ -24,7 +23,7 @@ public class AddUserCommand implements Command {
 
 
     @Override
-    public void execute() throws InvalidCommandException {
+    public void execute() {
         final User user = new User(username, firstName, lastName);
         userService.saveUser(user);
         log.info(user + "created successfully");

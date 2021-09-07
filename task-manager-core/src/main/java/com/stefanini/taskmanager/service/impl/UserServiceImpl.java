@@ -6,7 +6,6 @@ import java.util.Optional;
 import com.stefanini.taskmanager.entity.User;
 import com.stefanini.taskmanager.repository.UserRepository;
 import com.stefanini.taskmanager.service.UserService;
-import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,16 +29,16 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public int saveUser(User user) {
+    public void saveUser(User user) {
         log.info("Entered saveUser with user = {}", user);
-        return userRepository.saveUser(user);
+        userRepository.saveUser(user);
     }
 
 
     @Override
-    public int deleteUserById(Long id) throws UserNotFoundException {
+    public void deleteUserById(Long id) {
         log.info("Entered deleteUserById with id = {}", id);
-        return userRepository.deleteUserById(id);
+        userRepository.deleteUserById(id);
     }
 
     @Override
@@ -50,8 +49,14 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Optional<User> findByUsername(String username) {
+    public Optional<User> getById(final Long id) {
+        log.info("Entered findById with id = {}", id);
+        return userRepository.findById(id);
+    }
+
+    @Override
+    public User findByUsername(String username) {
         log.info("Entered findByUsername with username = {}", username);
-        return this.userRepository.findByUsername(username);
+        return userRepository.findByUsername(username);
     }
 }

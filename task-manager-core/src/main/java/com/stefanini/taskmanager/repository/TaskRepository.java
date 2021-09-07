@@ -4,9 +4,22 @@ package com.stefanini.taskmanager.repository;
 import java.util.List;
 
 import com.stefanini.taskmanager.entity.Task;
-import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
 
 public interface TaskRepository {
+
+
+    /**
+     * Finds all tasks
+     */
+    List<Task> findAllTasks();
+
+    /**
+     * Deletes tasks
+     *
+     * @param task - a <code>Task</code> representing the task which will be deleted
+     */
+    void saveTask(final Task task);
+
 
     /**
      * Deletes tasks, by title, for the specified username
@@ -26,9 +39,8 @@ public interface TaskRepository {
     /**
      * Adds tasks to a specific user, by giving his username
      *
-     * @param task -a <code>Task</code> representing the task which will be added
+     * @param task     -a <code>Task</code> representing the task which will be added
      * @param username -a <code>String</code> representing the username of the user, for whom the task will be added
      */
-    int saveTaskFor(Task task, String username);
-
+    void saveTaskFor(Task task, String username);
 }

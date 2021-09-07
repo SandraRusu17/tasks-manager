@@ -1,6 +1,5 @@
 package com.stefanini.taskmanager.command;
 
-import com.stefanini.taskmanager.command.exceptions.InvalidCommandException;
 import com.stefanini.taskmanager.service.ServiceFactory;
 import com.stefanini.taskmanager.service.TaskService;
 import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
@@ -24,7 +23,7 @@ public class AddTaskCommand implements Command {
 
 
     @Override
-    public void execute() throws UserNotFoundException, InvalidCommandException {
+    public void execute() throws UserNotFoundException{
 
         taskService.addTaskFor(taskTitle, taskDescription, username);
         log.info("Task [" + taskTitle + "] created successfully");
