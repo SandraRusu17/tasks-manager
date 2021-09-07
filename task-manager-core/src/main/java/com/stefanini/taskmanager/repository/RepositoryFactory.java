@@ -1,7 +1,6 @@
 package com.stefanini.taskmanager.repository;
 
 import com.stefanini.taskmanager.repository.impl.TaskHibernateRepositoryImpl;
-import com.stefanini.taskmanager.repository.impl.TaskJDBCRepositoryImpl;
 import com.stefanini.taskmanager.repository.impl.UserHibernateRepositoryImpl;
 
 public class RepositoryFactory {

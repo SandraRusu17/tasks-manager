@@ -4,7 +4,6 @@ package com.stefanini.taskmanager.repository;
 import java.util.List;
 
 import com.stefanini.taskmanager.entity.Task;
-import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
 
 public interface TaskRepository {
 

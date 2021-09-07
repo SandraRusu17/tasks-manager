@@ -6,7 +6,6 @@ import java.util.Optional;
 import com.stefanini.taskmanager.entity.User;
 import com.stefanini.taskmanager.repository.UserRepository;
 import com.stefanini.taskmanager.service.UserService;
-import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -60,17 +59,4 @@ public class UserServiceImpl implements UserService {
         log.info("Entered findByUsername with username = {}", username);
         return userRepository.findByUsername(username);
     }
-
-
-//    @Override
-//    public User findByUsername(String username) throws UserNotFoundException {
-//        log.info("Entered findByUsername with username = {}", username);
-//        return this.userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User with username " + username + " not found"));
-//    }
-//
-//    @Override
-//    public User getById(final Long id) throws UserNotFoundException {
-//        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
-//    }
-
 }

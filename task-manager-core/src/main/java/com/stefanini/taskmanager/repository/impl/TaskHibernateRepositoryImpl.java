@@ -5,11 +5,13 @@ import com.stefanini.taskmanager.entity.User;
 import com.stefanini.taskmanager.repository.BaseRepository;
 import com.stefanini.taskmanager.repository.TaskRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.HibernateException;
 
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Queue;
@@ -52,7 +54,7 @@ public class TaskHibernateRepositoryImpl<T, ID extends Serializable> extends Bas
             query.setParameter("title", taskTitle);
             query.executeUpdate();
             t.commit();
-        } catch (Exception e) {
+        } catch (IllegalStateException | HibernateException e) {
             t.rollback();
             log.info("Something bad happened during committing the transaction", e);
         }

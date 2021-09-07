@@ -1,6 +1,5 @@
 package com.stefanini.taskmanager.command;
 
-import com.stefanini.taskmanager.command.exceptions.InvalidCommandException;
 import com.stefanini.taskmanager.entity.User;
 import com.stefanini.taskmanager.service.ServiceFactory;
 import com.stefanini.taskmanager.service.UserService;

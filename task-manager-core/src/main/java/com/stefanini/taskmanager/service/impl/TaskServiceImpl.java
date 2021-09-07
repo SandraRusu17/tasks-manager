@@ -5,7 +5,6 @@ import java.util.List;
 import com.stefanini.taskmanager.entity.Task;
 import com.stefanini.taskmanager.repository.TaskRepository;
 import com.stefanini.taskmanager.service.TaskService;
-import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
 
 import lombok.extern.slf4j.Slf4j;
 

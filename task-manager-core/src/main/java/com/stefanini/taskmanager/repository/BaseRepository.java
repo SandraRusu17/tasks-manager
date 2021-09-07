@@ -1,7 +1,8 @@
 package com.stefanini.taskmanager.repository;
 
-import com.stefanini.taskmanager.entity.User;
+
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.HibernateException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -40,7 +41,7 @@ public abstract class BaseRepository<T, ID> implements AbstractRepository<T, ID>
             entityManager.persist(entity);
             transaction.commit();
             log.info("Saved {}", entity.toString());
-        } catch (Exception e) {
+        } catch (IllegalStateException | HibernateException e) {
             transaction.rollback();
             log.info("Something bad happened during fetching an entity");
         }
@@ -64,7 +65,7 @@ public abstract class BaseRepository<T, ID> implements AbstractRepository<T, ID>
         try {
             entityManager.remove(entityManager.merge(entity));
             transaction.commit();
-        } catch (Exception e) {
+        } catch (IllegalStateException | HibernateException e) {
             transaction.rollback();
             log.info("Something bad happened during fetching an entity");
         }
@@ -90,7 +91,7 @@ public abstract class BaseRepository<T, ID> implements AbstractRepository<T, ID>
         try {
             entityManager.merge(entity);
             transaction.commit();
-        } catch (Exception e) {
+        } catch (IllegalStateException | HibernateException e) {
             transaction.rollback();
             log.info("Something bad happened during fetching an entity");
         }
