@@ -11,20 +11,17 @@ import java.util.*;
 @Data
 @AllArgsConstructor
 
-@Entity(name = "users")
+@Entity
+@Table(name = "users")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
-    @JoinTable(name = "users_tasks",
-            inverseJoinColumns = @JoinColumn(name = "task_id",
-                    nullable = false,
-                    updatable = false),
-            joinColumns = @JoinColumn(name = "user_id",
-                    nullable = false,
-                    updatable = false))
-
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_task",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "task_id")
+    )
 
     private Set<Task> tasks = new HashSet<>();
 
@@ -46,10 +43,10 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public User(final String userName, final String firstName, final String lastName) {
-        this.userName = userName;
+    public User(final String firstName, final String lastName, final String userName) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.userName = userName;
 
     }
 
@@ -81,8 +78,10 @@ public class User implements Serializable {
     }
 
     public String toString() {
-        return "User {" + firstName +
+        return "User {" + id +
+                "," + firstName +
                 ", " + lastName +
+                " , " + userName +
                 ", nr. of tasks=" + tasks.size() +
                 '}';
     }

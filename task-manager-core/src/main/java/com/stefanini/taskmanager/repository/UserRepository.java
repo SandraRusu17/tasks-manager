@@ -19,8 +19,18 @@ public interface UserRepository {
      * Returns a user, by his username
      *
      * @param username -(String) the username given in order to find the user
+     * @return
      */
-    Optional<User> findByUsername(String username);
+    User findByUsername(String username);
+
+
+    /**
+     * Returns a user, by his username
+     *
+     * @param id -(Long) the id given in order to find the user
+     */
+    Optional<User> findById(Long id);
+
 
     /**
      * Gets all the users from database
@@ -32,10 +42,10 @@ public interface UserRepository {
     /**
      * Deletes an user by his id
      *
-     * @param username -(String) the user's username
+     * @param id -(String) the user's id
      * @return
      */
-    void deleteUserByUsername(String username);
+    void deleteUserById(Long id);
 
 
 

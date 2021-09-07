@@ -47,10 +47,14 @@ public class UserFileRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> findByUsername(final String username) {
-        return findAllUsers()
-                .stream()
-                .filter(u -> u.getUserName().equals(username)).findFirst();
+    public User findByUsername(String username) {
+        return null;
+    }
+
+
+    @Override
+    public Optional<User> findById(Long id) {
+        return Optional.empty();
     }
 
     @SuppressWarnings("unchecked")
@@ -86,7 +90,7 @@ public class UserFileRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void deleteUserByUsername(final String username) {
+    public void deleteUserById(final Long id) {
         throw new UnsupportedOperationException();
     }
 }

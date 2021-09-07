@@ -14,23 +14,14 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 
-@Entity(name = "tasks")
+@Entity
+@Table(name = "tasks")
 public class Task implements Serializable {
-
-
-    @Transient
-    @ManyToMany
-    @JoinTable(name = "users_tasks",
-            inverseJoinColumns = @JoinColumn(name = "user_id",
-                    nullable = false,
-                    updatable = false),
-            joinColumns = @JoinColumn(name = "task_id",
-                    nullable = false,
-                    updatable = false))
-
-    private Set<User> users = new HashSet<>();
-
     private static final long serialVersionUID = 1L;
+
+
+    @ManyToMany(mappedBy = "tasks", fetch = FetchType.EAGER)
+    private Set<User> users = new HashSet<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -52,12 +43,12 @@ public class Task implements Serializable {
 
     }
 
-    public void addUser(User user){
+    public void addUser(User user) {
         users.add(user);
         user.getTasks().add(this);
     }
 
-    public void removeUser(User user){
+    public void removeUser(User user) {
         users.remove(user);
         user.getTasks().remove(this);
     }

@@ -4,6 +4,7 @@ import com.stefanini.taskmanager.entity.User;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -14,72 +15,79 @@ import java.util.Optional;
 @Slf4j
 public abstract class BaseRepository<T, ID> implements AbstractRepository<T, ID> {
 
-    protected EntityManager entityManager;
-
-    private final Class<T> type;
+    protected final EntityManager entityManager;
+    protected final Class<T> type;
 
     protected BaseRepository(Class<T> type) {
+        entityManager = Persistence.createEntityManagerFactory(
+                "local-mysql").createEntityManager();
         this.type = type;
     }
 
-    public static EntityManager getEntityManager() {
-        String persistenceUnitName = "local-mysql";
-        return Persistence.createEntityManagerFactory(persistenceUnitName).createEntityManager();
-    }
 
-    protected void checkTransaction() {
-        if (!entityManager.getTransaction().isActive()) {
-            entityManager.getTransaction().begin();
+
+    protected EntityTransaction beginTransaction() {
+        final EntityTransaction transaction = entityManager.getTransaction();
+        if (!transaction.isActive()) {
+            transaction.begin();
         }
+        return transaction;
     }
 
     @Override
     public void create(T entity) {
-        checkTransaction();
+        final EntityTransaction transaction = beginTransaction();
         try {
-            this.entityManager.persist(entity);
-            this.entityManager.getTransaction().commit();
+            entityManager.persist(entity);
+            transaction.commit();
+            log.info("Saved {}", entity.toString());
         } catch (Exception e) {
+            transaction.rollback();
             log.info("Something bad happened during fetching an entity");
         }
     }
 
     @Override
     public List<T> findAll() {
-        CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+        final EntityTransaction transaction = beginTransaction();
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> cq = builder.createQuery(type);
         Root<T> root = cq.from(type);
         cq.select(root);
-        return this.entityManager.createQuery(cq).getResultList();
+        final List<T> result = entityManager.createQuery(cq).getResultList();
+        transaction.commit();
+        return result;
     }
 
     @Override
     public void delete(T entity) {
-        checkTransaction();
+        final EntityTransaction transaction = beginTransaction();
         try {
-            this.entityManager.remove(this.entityManager.merge(entity));
-            this.entityManager.getTransaction().commit();
+            entityManager.remove(entityManager.merge(entity));
+            transaction.commit();
         } catch (Exception e) {
+            transaction.rollback();
             log.info("Something bad happened during fetching an entity");
         }
     }
 
     @Override
     public void update(T entity) {
-        checkTransaction();
+        final EntityTransaction transaction = beginTransaction();
         try {
-            this.entityManager.merge(entity);
-            this.entityManager.getTransaction().commit();
+            entityManager.merge(entity);
+            transaction.commit();
         } catch (Exception e) {
+            transaction.rollback();
             log.info("Something bad happened during fetching an entity");
         }
     }
 
     @Override
     public Optional<T> getById(ID id) {
-        checkTransaction();
+        final EntityTransaction transaction = beginTransaction();
         final T entity = entityManager.find(type, id);
-        this.entityManager.getTransaction().commit();
+        transaction.commit();
         return Optional.ofNullable(entity);
     }
 

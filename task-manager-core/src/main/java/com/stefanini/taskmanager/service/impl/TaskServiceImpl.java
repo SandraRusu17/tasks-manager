@@ -38,9 +38,10 @@ public class TaskServiceImpl implements TaskService {
 
     //one more logical feature
     @Override
-    public void deleteTaskByTitleFor(String taskTitle, String username) {
+    public Task deleteTaskByTitleFor(String taskTitle, String username) {
         log.info("Entered deleteTaskByTitleFor with taskTitle = {} and username = {}", taskTitle, username);
         taskRepository.deleteTaskByTitleFor(taskTitle, username);
+        return null;
     }
 
     @Override
