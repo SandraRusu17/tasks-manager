@@ -32,10 +32,6 @@ public class TaskHibernateRepositoryImpl<T, ID extends Serializable> extends Bas
         super(Task.class);
     }
 
-    public void deleteTaskById(final Long id) {
-        final Optional<Task> byId = getById(id);
-        byId.ifPresent(this::delete);
-    }
 
     public List<Task> findAllTasks() {
         return findAll();
@@ -44,7 +40,6 @@ public class TaskHibernateRepositoryImpl<T, ID extends Serializable> extends Bas
     public void saveTask(final Task task) {
         create(task);
     }
-
 
     @Override
     public void deleteTaskByTitleFor(String taskTitle, String username) {

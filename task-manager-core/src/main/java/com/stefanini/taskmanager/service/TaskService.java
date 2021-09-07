@@ -7,6 +7,15 @@ import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
 
 public interface TaskService {
 
+
+
+    /**
+     * Finds all tasks
+     *
+     */
+    public List<Task> findAllTasks();
+
+
     /**
      * Finds tasks for the specified username
      *
@@ -23,7 +32,6 @@ public interface TaskService {
      * @throws UserNotFoundException when the user is not found, this exception is thrown
      * @return
      */
-    //one more logical feature
     Task deleteTaskByTitleFor(String taskTitle, String username)  throws UserNotFoundException;
 
 
@@ -36,6 +44,8 @@ public interface TaskService {
      * @throws UserNotFoundException when the user is not found, this exception is thrown
      */
     void addTaskFor(String taskTitle, String taskDescription, String username) throws UserNotFoundException;
+
+    void saveTask(final Task task);
 
 
 }

@@ -106,6 +106,16 @@ public class TaskJDBCRepositoryImpl implements TaskRepository {
 
 
     @Override
+    public List<Task> findAllTasks() {
+        return null;
+    }
+
+    @Override
+    public void saveTask(Task task) {
+
+    }
+
+    @Override
     public void deleteTaskByTitleFor(String taskTitle, String username) {
 
         try (Connection connection = DataSourceProvider.getMysqlConnection();

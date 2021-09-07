@@ -42,16 +42,14 @@ public class UserHibernateRepositoryImpl<T, ID extends Serializable> extends Bas
         return user;
     }
 
-    @Override
-    public void deleteUserById(final Long id) {
-        final Optional<User> byId = getById(id);
-        byId.ifPresent(this::delete);
-
-    }
 
     @Override
     public List<User> findAllUsers() {
         return findAll();
+    }
+
+    @Override
+    public void deleteUserById(Long id) {
     }
 
     @Override

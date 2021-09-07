@@ -30,6 +30,12 @@ public class TaskServiceImpl implements TaskService {
 
 
     @Override
+    public List<Task> findAllTasks() {
+        log.info("Entered findAllTasks ");
+        return taskRepository.findAllTasks();
+    }
+
+    @Override
     public List<Task> getTasksFor(String username) {
         log.info("Entered getTasksFor with username = {}", username);
         return taskRepository.getTasksFor(username);
@@ -48,6 +54,12 @@ public class TaskServiceImpl implements TaskService {
     public void addTaskFor(String taskTitle, String taskDescription, String username) throws UserNotFoundException {
         log.info("Entered addTaskFor with taskTitle = {} , taskDescription = {} and username = {}", taskTitle, taskDescription, username);
         taskRepository.saveTaskFor(new Task(taskTitle, taskDescription), username);
+    }
+
+    @Override
+    public void saveTask(Task task) {
+        log.info("Entered saveTask ");
+        taskRepository.saveTask(task);
     }
 
 

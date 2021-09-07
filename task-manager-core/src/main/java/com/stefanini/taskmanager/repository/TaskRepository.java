@@ -8,6 +8,21 @@ import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
 
 public interface TaskRepository {
 
+
+    /**
+     * Finds all tasks
+     *
+     */
+    public List<Task> findAllTasks();
+
+    /**
+     * Deletes tasks
+     *
+     * @param task - a <code>Task</code> representing the task which will be deleted
+     */
+    void saveTask(final Task task);
+
+
     /**
      * Deletes tasks, by title, for the specified username
      *

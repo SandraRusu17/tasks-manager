@@ -15,4 +15,6 @@ public interface AbstractRepository<T, ID> {
 
     void create(T entity);
 
+    void deleteById(T entity, ID id);
+
 }

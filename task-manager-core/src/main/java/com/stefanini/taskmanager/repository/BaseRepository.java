@@ -72,6 +72,22 @@ public abstract class BaseRepository<T, ID> implements AbstractRepository<T, ID>
     }
 
     @Override
+    public void deleteById(T entity, ID id){
+        final Optional<T> byId = getById(id);
+        byId.ifPresent(this::delete);
+    }
+
+
+
+    @Override
+    public Optional<T> getById(ID id) {
+        final EntityTransaction transaction = beginTransaction();
+        final T entity = entityManager.find(type, id);
+        transaction.commit();
+        return Optional.ofNullable(entity);
+    }
+
+    @Override
     public void update(T entity) {
         final EntityTransaction transaction = beginTransaction();
         try {
@@ -82,14 +98,5 @@ public abstract class BaseRepository<T, ID> implements AbstractRepository<T, ID>
             log.info("Something bad happened during fetching an entity");
         }
     }
-
-    @Override
-    public Optional<T> getById(ID id) {
-        final EntityTransaction transaction = beginTransaction();
-        final T entity = entityManager.find(type, id);
-        transaction.commit();
-        return Optional.ofNullable(entity);
-    }
-
 }
 

@@ -16,17 +16,22 @@ import java.util.Optional;
 
 @Slf4j
 public class App {
-    public static void main(String[] args) throws UserNotFoundException, InvalidCommandException {
+    public static void main(String[] args) throws UserNotFoundException{
         UserService userService = ServiceFactory.getInstance().getUserService();
         TaskService taskService = ServiceFactory.getInstance().getTaskService();
 
+//
+//        userService.saveUser(new User("sandra","rusu","bbb"));
+//        final User byUsername = userService.findByUsername("bbb");
+//        log.info(byUsername.toString());
+//
+//        final Task task = new Task("titluuu", "descriereee");
+//        taskService.saveTask(task);
+//
+//        taskService.findAllTasks();
 
-        userService.saveUser(new User("sandra","rusu","bbb"));
-//        final Optional<User> byUsername = userService.findByUsername("bbb");
-//        byUsername.ifPresent(System.out::println);
-
-//        final Optional<User> byUsername = userService.findByUsername("sandrarusu");
-//        byUsername.ifPresent(System.out::println);
+//        final User byUsername = userService.findByUsername("qqq");
+//        System.out.println(byUsername);
 
 //        final List<User> allUsers = userService.getAllUsers();
 //        System.out.println(allUsers);
@@ -34,12 +39,7 @@ public class App {
 //        final Optional<User> findById = userService.getById(1L);
 //        findById.ifPresent(System.out::println);
 
-//        final Task tasks = taskService.deleteTaskByTitleFor("titlu","qqq");
-//        System.out.println(tasks);
 
-//        taskService.getTasksFor("qqq");
-
-//        final Task task = new Task("this is title","this is description");
 
 
 
