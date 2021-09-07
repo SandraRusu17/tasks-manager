@@ -8,12 +8,10 @@ import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
 public interface TaskService {
 
 
-
     /**
      * Finds all tasks
-     *
      */
-    public List<Task> findAllTasks();
+    List<Task> findAllTasks();
 
 
     /**
@@ -29,22 +27,27 @@ public interface TaskService {
      *
      * @param taskTitle a <code>String</code> representing the title of the task which will be deleted
      * @param username  a <code>String</code> representing the username given in order to get the tasks for
-     * @throws UserNotFoundException when the user is not found, this exception is thrown
      * @return
+     * @throws UserNotFoundException when the user is not found, this exception is thrown
      */
-    Task deleteTaskByTitleFor(String taskTitle, String username)  throws UserNotFoundException;
+    Task deleteTaskByTitleFor(String taskTitle, String username) throws UserNotFoundException;
 
 
     /**
      * Adds tasks to a specific user, by giving his username
      *
-     * @param taskTitle a <code>String</code> representing the title of the task which will be added
+     * @param taskTitle       a <code>String</code> representing the title of the task which will be added
      * @param taskDescription a <code>String</code> representing the description of the task which will be added
-     * @param username a <code>String</code> representing the username of the user, for whom the task will be added
+     * @param username        a <code>String</code> representing the username of the user, for whom the task will be added
      * @throws UserNotFoundException when the user is not found, this exception is thrown
      */
     void addTaskFor(String taskTitle, String taskDescription, String username) throws UserNotFoundException;
 
+    /**
+     * Saves a task
+     *
+     * @param task - a <code>Task</code> which will be saved
+     */
     void saveTask(final Task task);
 
 

@@ -11,19 +11,19 @@ public class RepositoryFactory {
     }
 
     public static RepositoryFactory getInstance() {
-        if(INSTANCE == null) {
+        if (INSTANCE == null) {
             INSTANCE = new RepositoryFactory();
         }
 
         return INSTANCE;
     }
 
-    public UserRepository getUserRepository(){
+    public UserRepository getUserRepository() {
 //        return UserFileRepositoryImpl.getInstance();
         return UserHibernateRepositoryImpl.getInstance();
     }
 
-    public TaskRepository getTaskRepository(){
+    public TaskRepository getTaskRepository() {
 //        return UserFileRepositoryImpl.getInstance();
         return TaskHibernateRepositoryImpl.getInstance();
     }

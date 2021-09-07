@@ -41,8 +41,6 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.getTasksFor(username);
     }
 
-
-    //one more logical feature
     @Override
     public Task deleteTaskByTitleFor(String taskTitle, String username) {
         log.info("Entered deleteTaskByTitleFor with taskTitle = {} and username = {}", taskTitle, username);
@@ -51,7 +49,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void addTaskFor(String taskTitle, String taskDescription, String username) throws UserNotFoundException {
+    public void addTaskFor(String taskTitle, String taskDescription, String username) {
         log.info("Entered addTaskFor with taskTitle = {} , taskDescription = {} and username = {}", taskTitle, taskDescription, username);
         taskRepository.saveTaskFor(new Task(taskTitle, taskDescription), username);
     }

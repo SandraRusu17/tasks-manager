@@ -37,6 +37,11 @@ public interface UserRepository {
      */
     List<User> findAllUsers();
 
+    /**
+     * Updates an user
+     *
+     * @param user - (User) the user given in order to be updated
+     */
     void update(User user);
 
     /**
@@ -46,7 +51,6 @@ public interface UserRepository {
      * @return
      */
     void deleteUserById(Long id);
-
 
 
 }

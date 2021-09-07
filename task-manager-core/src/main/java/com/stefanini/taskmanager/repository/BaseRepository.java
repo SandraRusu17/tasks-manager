@@ -25,7 +25,6 @@ public abstract class BaseRepository<T, ID> implements AbstractRepository<T, ID>
     }
 
 
-
     protected EntityTransaction beginTransaction() {
         final EntityTransaction transaction = entityManager.getTransaction();
         if (!transaction.isActive()) {
@@ -76,8 +75,6 @@ public abstract class BaseRepository<T, ID> implements AbstractRepository<T, ID>
         final Optional<T> byId = getById(id);
         byId.ifPresent(this::delete);
     }
-
-
 
     @Override
     public Optional<T> getById(ID id) {

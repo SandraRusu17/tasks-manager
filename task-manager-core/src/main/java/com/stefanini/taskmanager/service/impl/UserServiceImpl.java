@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void deleteUserById(Long id) throws UserNotFoundException {
+    public void deleteUserById(Long id) {
         log.info("Entered deleteUserById with id = {}", id);
         userRepository.deleteUserById(id);
     }
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Optional<User> getById(final Long id) throws UserNotFoundException {
+    public Optional<User> getById(final Long id) {
         log.info("Entered findById with id = {}", id);
         return userRepository.findById(id);
     }

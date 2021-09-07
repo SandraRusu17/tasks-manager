@@ -30,7 +30,6 @@ public class UserHibernateRepositoryImpl<T, ID extends Serializable> extends Bas
         create(user);
     }
 
-
     @Override
     public User findByUsername(final String username) {
         final EntityTransaction t = beginTransaction();
@@ -49,8 +48,7 @@ public class UserHibernateRepositoryImpl<T, ID extends Serializable> extends Bas
     }
 
     @Override
-    public void deleteUserById(Long id) {
-    }
+    public void deleteUserById(Long id) {}
 
     @Override
     public Optional<User> findById(Long id) {

@@ -27,13 +27,9 @@ public class TaskJDBCRepositoryImpl implements TaskRepository {
         return INSTANCE;
     }
 
-
-
-
     @Override
     public void saveTaskFor(Task task, String username) {
 
-        int result = 0;
         User user = null;
         try (Connection connection = DataSourceProvider.getMysqlConnection();
              PreparedStatement ps1 = connection.prepareStatement("SELECT * FROM users WHERE username=?");
@@ -52,7 +48,7 @@ public class TaskJDBCRepositoryImpl implements TaskRepository {
                 ps2.setLong(3, user.getId());
                 ps2.setString(1, task.getTitle());
                 ps2.setString(2, task.getDescription());
-                result = ps2.executeUpdate();
+                ps2.executeUpdate();
 
                 try (ResultSet generatedKeys = ps2.getGeneratedKeys()) {
                     if (generatedKeys.next())
@@ -100,10 +96,8 @@ public class TaskJDBCRepositoryImpl implements TaskRepository {
         } catch (SQLException e) {
             log.error("Something bad happened during fetching a task with username = {}", username, e);
         }
-
         return tasks;
     }
-
 
     @Override
     public List<Task> findAllTasks() {
@@ -112,7 +106,6 @@ public class TaskJDBCRepositoryImpl implements TaskRepository {
 
     @Override
     public void saveTask(Task task) {
-
     }
 
     @Override

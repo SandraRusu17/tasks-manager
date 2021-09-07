@@ -32,11 +32,12 @@ public class TaskHibernateRepositoryImpl<T, ID extends Serializable> extends Bas
         super(Task.class);
     }
 
-
+    @Override
     public List<Task> findAllTasks() {
         return findAll();
     }
 
+    @Override
     public void saveTask(final Task task) {
         create(task);
     }

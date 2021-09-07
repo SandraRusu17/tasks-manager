@@ -57,7 +57,7 @@ public class UserFileRepositoryImpl implements UserRepository {
         return Optional.empty();
     }
 
-    @SuppressWarnings("unchecked")
+
     @Override
     public List<User> findAllUsers() {
         try (

@@ -24,7 +24,7 @@ public class AddUserCommand implements Command {
 
 
     @Override
-    public void execute() throws InvalidCommandException {
+    public void execute() {
         final User user = new User(username, firstName, lastName);
         userService.saveUser(user);
         log.info(user + "created successfully");

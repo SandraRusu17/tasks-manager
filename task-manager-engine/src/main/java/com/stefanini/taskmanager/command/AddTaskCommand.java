@@ -24,7 +24,7 @@ public class AddTaskCommand implements Command {
 
 
     @Override
-    public void execute() throws UserNotFoundException, InvalidCommandException {
+    public void execute() throws UserNotFoundException{
 
         taskService.addTaskFor(taskTitle, taskDescription, username);
         log.info("Task [" + taskTitle + "] created successfully");

@@ -11,9 +11,8 @@ public interface TaskRepository {
 
     /**
      * Finds all tasks
-     *
      */
-    public List<Task> findAllTasks();
+    List<Task> findAllTasks();
 
     /**
      * Deletes tasks
@@ -41,7 +40,7 @@ public interface TaskRepository {
     /**
      * Adds tasks to a specific user, by giving his username
      *
-     * @param task -a <code>Task</code> representing the task which will be added
+     * @param task     -a <code>Task</code> representing the task which will be added
      * @param username -a <code>String</code> representing the username of the user, for whom the task will be added
      */
     void saveTaskFor(Task task, String username);

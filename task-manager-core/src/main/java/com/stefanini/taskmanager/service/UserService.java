@@ -20,7 +20,7 @@ public interface UserService {
     /**
      * Returns a user, by his username
      *
-     * @param username  - a <code>String</code> representing the username given in order to find the user
+     * @param username - a <code>String</code> representing the username given in order to find the user
      * @return the user, with his id, firstName, lastName and userName
      */
     User findByUsername(String username) throws UserNotFoundException;
@@ -29,7 +29,7 @@ public interface UserService {
     /**
      * Returns a user, by his username
      *
-     * @param id  - a <code>Long</code> representing the id given in order to find the user
+     * @param id - a <code>Long</code> representing the id given in order to find the user
      * @return the user, with his id, firstName, lastName and userName
      */
     Optional<User> getById(Long id) throws UserNotFoundException;
@@ -41,7 +41,6 @@ public interface UserService {
      * @param id- a <code>Long</code> representing the user's id
      * @return int the operation is executed
      */
-    //one more logical feature
     void deleteUserById(Long id) throws UserNotFoundException;
 
 

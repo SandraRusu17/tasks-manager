@@ -23,9 +23,6 @@ public class CommandFactory {
 
 
     public static Command parseCommandArguments(String[] arguments) throws InvalidCommandException {
-//        String joinedArguments = String.join(" ", arguments); //so we can have parameter values with spaces
-//        String[] commandAndParameters = joinedArguments.split(" -"); //split by ' -' again so we have the command and its parameters
-//        final String command = arguments[COMMAND];
 
         switch (arguments[0]) {
             case CREATE_USER_COMMAND:
