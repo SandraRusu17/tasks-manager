@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveUser(User user) {
-        log.info("Entered saveUser with user = {}", user);
+        log.info("Creating {}", user);
         userRepository.saveUser(user);
     }
 

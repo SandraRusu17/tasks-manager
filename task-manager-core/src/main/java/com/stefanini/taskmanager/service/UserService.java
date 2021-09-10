@@ -8,6 +8,7 @@ import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
 
 public interface UserService {
 
+
     /**
      * Saves a user in database
      *
