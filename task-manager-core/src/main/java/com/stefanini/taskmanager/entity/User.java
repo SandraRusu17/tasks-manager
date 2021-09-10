@@ -1,6 +1,7 @@
 package com.stefanini.taskmanager.entity;
 
 
+import com.stefanini.taskmanager.annotations.ActionEmailConfirmation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -13,6 +14,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "users")
+@ActionEmailConfirmation(email = {"sandra.rusu17@gmail.com"})
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;

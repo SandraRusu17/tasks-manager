@@ -3,6 +3,7 @@ package com.stefanini.taskmanager.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.stefanini.taskmanager.annotations.ActionEmailConfirmation;
 import com.stefanini.taskmanager.entity.User;
 import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
 
@@ -15,6 +16,7 @@ public interface UserService {
      * @param user - a <code>User</code>  representing the user with firstName, lastName and username
      * @return the saved user
      */
+    @ActionEmailConfirmation(email = {"sandra.rusu17@gmail.com"})
     void saveUser(User user);
 
     /**
