@@ -5,13 +5,13 @@ import com.stefanini.taskmanager.command.Command;
 import com.stefanini.taskmanager.command.CommandFactory;
 import com.stefanini.taskmanager.command.exceptions.InvalidCommandException;
 import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
-import lombok.extern.slf4j.Slf4j;
+import java.io.IOException;
 
 
-@Slf4j
 public class App {
-    public static void main(String[] args) throws  InvalidCommandException {
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(App.class);
 
+    public static void main(String[] args) throws InvalidCommandException, IOException {
         Command command = CommandFactory.parseCommandArguments(args);
         try {
             command.execute();

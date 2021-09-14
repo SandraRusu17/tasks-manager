@@ -9,12 +9,13 @@ import java.util.List;
 
 import com.stefanini.taskmanager.repository.DataSourceProvider;
 import com.stefanini.taskmanager.repository.TaskRepository;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
+
 public class TaskJDBCRepositoryImpl implements TaskRepository {
 
     public static TaskJDBCRepositoryImpl INSTANCE;
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TaskJDBCRepositoryImpl.class);
 
     private TaskJDBCRepositoryImpl() {
     }

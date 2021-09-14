@@ -3,17 +3,20 @@ package com.stefanini.taskmanager.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import com.stefanini.taskmanager.annotations.ActionEmailConfirmation;
+import com.stefanini.taskmanager.entity.Task;
 import com.stefanini.taskmanager.entity.User;
 import com.stefanini.taskmanager.repository.UserRepository;
+import com.stefanini.taskmanager.repository.impl.TaskHibernateRepositoryImpl;
 import com.stefanini.taskmanager.service.UserService;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class UserServiceImpl implements UserService {
     public static UserServiceImpl INSTANCE;
 
     private final UserRepository userRepository;
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(UserServiceImpl.class);
 
     private UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -29,8 +32,9 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    @ActionEmailConfirmation(email = {"sandra.rusu17@gmail.com", "sandra.rusu@stefanini.com"})
     public void saveUser(User user) {
-        log.info("Entered saveUser with user = {}", user);
+        log.info("Creating {}", user);
         userRepository.saveUser(user);
     }
 
@@ -58,5 +62,12 @@ public class UserServiceImpl implements UserService {
     public User findByUsername(String username) {
         log.info("Entered findByUsername with username = {}", username);
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public void createAndAssign(User user, Task task) {
+        log.info("Creating {} with asigned {}", user, task);
+        user.addTask(task);
+        userRepository.saveUser(user);
     }
 }

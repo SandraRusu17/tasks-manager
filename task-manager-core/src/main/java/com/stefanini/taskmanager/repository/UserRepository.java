@@ -4,6 +4,7 @@ package com.stefanini.taskmanager.repository;
 import java.util.List;
 import java.util.Optional;
 
+import com.stefanini.taskmanager.entity.Task;
 import com.stefanini.taskmanager.entity.User;
 
 public interface UserRepository {
@@ -51,6 +52,5 @@ public interface UserRepository {
      * @return
      */
     void deleteUserById(Long id);
-
 
 }

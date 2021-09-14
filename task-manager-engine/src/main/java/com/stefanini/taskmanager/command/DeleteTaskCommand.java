@@ -4,13 +4,12 @@ import com.stefanini.taskmanager.command.exceptions.InvalidCommandException;
 import com.stefanini.taskmanager.service.ServiceFactory;
 import com.stefanini.taskmanager.service.TaskService;
 import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
-import lombok.extern.slf4j.Slf4j;
 
-
-@Slf4j
 public class DeleteTaskCommand implements Command {
     private String taskTitle;
     private String username;
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DeleteTaskCommand.class);
 
     public DeleteTaskCommand(String taskTitle, String username) {
         this.taskTitle = taskTitle;

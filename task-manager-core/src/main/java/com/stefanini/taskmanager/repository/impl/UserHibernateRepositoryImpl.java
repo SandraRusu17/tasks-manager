@@ -1,8 +1,10 @@
 package com.stefanini.taskmanager.repository.impl;
 
+import com.stefanini.taskmanager.entity.Task;
 import com.stefanini.taskmanager.entity.User;
 import com.stefanini.taskmanager.repository.BaseRepository;
 import com.stefanini.taskmanager.repository.UserRepository;
+import org.hibernate.HibernateException;
 
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
@@ -20,6 +22,8 @@ public class UserHibernateRepositoryImpl<T, ID extends Serializable> extends Bas
         }
         return INSTANCE;
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TaskHibernateRepositoryImpl.class);
 
     public UserHibernateRepositoryImpl() {
         super(User.class);
@@ -41,14 +45,14 @@ public class UserHibernateRepositoryImpl<T, ID extends Serializable> extends Bas
         return user;
     }
 
-
     @Override
     public List<User> findAllUsers() {
         return findAll();
     }
 
     @Override
-    public void deleteUserById(Long id) {}
+    public void deleteUserById(Long id) {
+    }
 
     @Override
     public Optional<User> findById(Long id) {

@@ -1,11 +1,10 @@
 package com.stefanini.taskmanager.command;
 
 import com.stefanini.taskmanager.command.exceptions.InvalidCommandException;
-import lombok.extern.slf4j.Slf4j;
 
 import static com.stefanini.taskmanager.utils.CommandParameterParser.*;
 
-@Slf4j
+
 public class CommandFactory {
 
     //    -createUser -fn='FirstName' -ln='LastName' -un='UserName'
@@ -20,6 +19,8 @@ public class CommandFactory {
     public static final String DELETE_TASK_BY_TITLE_FOR_COMMAND = "-deleteTask";
 
     public static final int COMMAND = 0;
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CommandFactory.class);
 
 
     public static Command parseCommandArguments(String[] arguments) throws InvalidCommandException {
