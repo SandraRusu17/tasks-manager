@@ -4,16 +4,17 @@ import java.util.List;
 
 import com.stefanini.taskmanager.entity.Task;
 import com.stefanini.taskmanager.repository.TaskRepository;
+import com.stefanini.taskmanager.repository.impl.TaskHibernateRepositoryImpl;
 import com.stefanini.taskmanager.service.TaskService;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class TaskServiceImpl implements TaskService {
 
     public static TaskServiceImpl INSTANCE;
 
     private final TaskRepository taskRepository;
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TaskServiceImpl.class);
 
     private TaskServiceImpl(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;

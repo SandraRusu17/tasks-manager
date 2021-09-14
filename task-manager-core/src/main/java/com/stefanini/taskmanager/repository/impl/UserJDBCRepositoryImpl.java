@@ -4,14 +4,14 @@ import com.stefanini.taskmanager.entity.Task;
 import com.stefanini.taskmanager.entity.User;
 import com.stefanini.taskmanager.repository.DataSourceProvider;
 import com.stefanini.taskmanager.repository.UserRepository;
-import lombok.extern.slf4j.Slf4j;
+
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Slf4j
+
 public class UserJDBCRepositoryImpl implements UserRepository {
 
 
@@ -21,6 +21,8 @@ public class UserJDBCRepositoryImpl implements UserRepository {
 
 
     public static UserJDBCRepositoryImpl INSTANCE;
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(UserJDBCRepositoryImpl.class);
 
     private UserJDBCRepositoryImpl() {
     }

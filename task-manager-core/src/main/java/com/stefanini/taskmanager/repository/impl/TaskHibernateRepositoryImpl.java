@@ -1,22 +1,17 @@
 package com.stefanini.taskmanager.repository.impl;
 
 import com.stefanini.taskmanager.entity.Task;
-import com.stefanini.taskmanager.entity.User;
 import com.stefanini.taskmanager.repository.BaseRepository;
 import com.stefanini.taskmanager.repository.TaskRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.hibernate.HibernateException;
 
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
-import java.util.Queue;
 
-@Slf4j
+
 public class TaskHibernateRepositoryImpl<T, ID extends Serializable> extends BaseRepository<Task, Long> implements TaskRepository {
 
 
@@ -29,6 +24,8 @@ public class TaskHibernateRepositoryImpl<T, ID extends Serializable> extends Bas
         }
         return INSTANCE;
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TaskHibernateRepositoryImpl.class);
 
     public TaskHibernateRepositoryImpl() {
         super(Task.class);
@@ -72,6 +69,5 @@ public class TaskHibernateRepositoryImpl<T, ID extends Serializable> extends Bas
     @Override
     public void saveTaskFor(Task task, String username) {
     }
-
 
 }

@@ -1,18 +1,20 @@
 package com.stefanini.taskmanager.service.impl;
 
 import com.stefanini.taskmanager.entity.Email;
+import com.stefanini.taskmanager.repository.impl.TaskHibernateRepositoryImpl;
 import com.stefanini.taskmanager.service.EmailService;
-import lombok.extern.slf4j.Slf4j;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
-@Slf4j
+
 public class EmailServiceImpl implements EmailService {
     public static final String FROM_EMAIL_ADDRESS = "com.stefanini.taskman@gmail.com";
     public static EmailServiceImpl INSTANCE;
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EmailServiceImpl.class);
 
     public static EmailServiceImpl getInstance() {
         if (INSTANCE == null) {
@@ -46,7 +48,7 @@ public class EmailServiceImpl implements EmailService {
         return new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username,password);
+                return new PasswordAuthentication(username, password);
             }
         };
     }

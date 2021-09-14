@@ -1,7 +1,8 @@
 package com.stefanini.taskmanager.repository;
 
 
-import lombok.extern.slf4j.Slf4j;
+
+import com.stefanini.taskmanager.repository.impl.TaskHibernateRepositoryImpl;
 import org.hibernate.HibernateException;
 
 import javax.persistence.EntityManager;
@@ -13,11 +14,13 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
 
-@Slf4j
+
 public abstract class BaseRepository<T, ID> implements AbstractRepository<T, ID> {
 
     protected final EntityManager entityManager;
     protected final Class<T> type;
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BaseRepository.class);
 
     protected BaseRepository(Class<T> type) {
         entityManager = Persistence.createEntityManagerFactory(

@@ -2,9 +2,6 @@ package com.stefanini.taskmanager.entity;
 
 
 import com.stefanini.taskmanager.annotations.ActionEmailConfirmation;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Generated;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,12 +9,9 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-@Data
-@AllArgsConstructor
-
 @Entity
 @Table(name = "tasks")
-@ActionEmailConfirmation(email = {"sandra.rusu17@gmail.com"})
+@ActionEmailConfirmation(email = "sandra.rusu17@gmail.com")
 public class Task implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -53,6 +47,45 @@ public class Task implements Serializable {
     public void removeUser(User user) {
         users.remove(user);
         user.getTasks().remove(this);
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Task(Set<User> users, Long id, String title, String description) {
+        this.users = users;
+        this.id = id;
+        this.title = title;
+        this.description = description;
     }
 
     @Override

@@ -3,15 +3,14 @@ package com.stefanini.taskmanager.command;
 import com.stefanini.taskmanager.entity.User;
 import com.stefanini.taskmanager.service.ServiceFactory;
 import com.stefanini.taskmanager.service.UserService;
-import lombok.extern.slf4j.Slf4j;
 
-
-@Slf4j
 public class AddUserCommand implements Command {
 
     private String username;
     private String firstName;
     private String lastName;
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AddUserCommand.class);
 
     private UserService userService = ServiceFactory.getInstance().getUserService();
 

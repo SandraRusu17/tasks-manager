@@ -2,19 +2,16 @@ package com.stefanini.taskmanager.entity;
 
 
 import com.stefanini.taskmanager.annotations.ActionEmailConfirmation;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
 
-@Data
-@AllArgsConstructor
 
 @Entity
 @Table(name = "users")
-@ActionEmailConfirmation(email = {"sandra.rusu17@gmail.com"})
+@ActionEmailConfirmation(email = "sandra.rusu17@gmail.com")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -63,6 +60,53 @@ public class User implements Serializable {
         return id != null && Objects.equals(id, user.id);
     }
 
+    public User(Set<Task> tasks, Long id, String userName, String firstName, String lastName) {
+        this.tasks = tasks;
+        this.id = id;
+        this.userName = userName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public Set<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
     @Override
     public int hashCode() {

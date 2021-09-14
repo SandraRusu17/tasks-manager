@@ -1,26 +1,21 @@
 package com.stefanini.taskmanager;
 
 
-import com.stefanini.taskmanager.command.Command;
-import com.stefanini.taskmanager.command.CommandFactory;
 import com.stefanini.taskmanager.command.exceptions.InvalidCommandException;
-import com.stefanini.taskmanager.entity.Email;
 import com.stefanini.taskmanager.entity.User;
 import com.stefanini.taskmanager.service.EmailService;
 import com.stefanini.taskmanager.service.ServiceFactory;
 import com.stefanini.taskmanager.service.UserService;
-import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
-import com.stefanini.taskmanager.service.impl.EmailServiceImpl;
-import lombok.extern.slf4j.Slf4j;
 
 
-@Slf4j
 public class App {
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(App.class);
+
     public static void main(String[] args) throws InvalidCommandException {
         EmailService emailService = ServiceFactory.getInstance().getEmailService();
         UserService userService = ServiceFactory.getInstance().getUserService();
 
-        User user = new User("nanana", "lala", "ded");
+        User user = new User("nanana", "lala", "ttt");
         userService.saveUser(user);
 
 //

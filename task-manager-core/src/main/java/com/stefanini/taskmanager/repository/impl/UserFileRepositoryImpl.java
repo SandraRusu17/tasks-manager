@@ -12,18 +12,18 @@ import java.util.Optional;
 
 import com.stefanini.taskmanager.entity.User;
 import com.stefanini.taskmanager.repository.UserRepository;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class UserFileRepositoryImpl implements UserRepository {
 
     public static UserFileRepositoryImpl INSTANCE;
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(UserFileRepositoryImpl.class);
 
     private UserFileRepositoryImpl() {
     }
 
     public static UserFileRepositoryImpl getInstance() {
-        if(INSTANCE == null) {
+        if (INSTANCE == null) {
             INSTANCE = new UserFileRepositoryImpl();
         }
 
@@ -78,8 +78,8 @@ public class UserFileRepositoryImpl implements UserRepository {
                 ObjectOutputStream oos = new ObjectOutputStream(fout)
         ) {
             ListIterator<User> iterator = users.listIterator();
-            while (iterator.hasNext()){
-                if(iterator.next().getUserName().equals(user.getUserName())){
+            while (iterator.hasNext()) {
+                if (iterator.next().getUserName().equals(user.getUserName())) {
                     iterator.set(user);
                 }
             }

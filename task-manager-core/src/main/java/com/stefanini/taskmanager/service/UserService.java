@@ -16,7 +16,7 @@ public interface UserService {
      * @param user - a <code>User</code>  representing the user with firstName, lastName and username
      * @return the saved user
      */
-    @ActionEmailConfirmation(email = {"sandra.rusu17@gmail.com"})
+
     void saveUser(User user);
 
     /**
