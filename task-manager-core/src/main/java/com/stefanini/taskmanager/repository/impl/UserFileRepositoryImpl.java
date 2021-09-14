@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Optional;
 
+import com.stefanini.taskmanager.entity.Task;
 import com.stefanini.taskmanager.entity.User;
 import com.stefanini.taskmanager.repository.UserRepository;
 
@@ -93,4 +94,5 @@ public class UserFileRepositoryImpl implements UserRepository {
     public void deleteUserById(final Long id) {
         throw new UnsupportedOperationException();
     }
+
 }

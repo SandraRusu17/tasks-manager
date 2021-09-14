@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.stefanini.taskmanager.annotations.ActionEmailConfirmation;
+import com.stefanini.taskmanager.entity.Task;
 import com.stefanini.taskmanager.entity.User;
 import com.stefanini.taskmanager.repository.UserRepository;
 import com.stefanini.taskmanager.repository.impl.TaskHibernateRepositoryImpl;
@@ -28,7 +29,6 @@ public class UserServiceImpl implements UserService {
 
         return INSTANCE;
     }
-
 
 
     @Override
@@ -62,5 +62,12 @@ public class UserServiceImpl implements UserService {
     public User findByUsername(String username) {
         log.info("Entered findByUsername with username = {}", username);
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public void createAndAssign(User user, Task task) {
+        log.info("Creating {} with asigned {}", user, task);
+        user.addTask(task);
+        userRepository.saveUser(user);
     }
 }

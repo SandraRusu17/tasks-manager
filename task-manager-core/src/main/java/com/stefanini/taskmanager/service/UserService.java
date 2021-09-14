@@ -3,7 +3,7 @@ package com.stefanini.taskmanager.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.stefanini.taskmanager.annotations.ActionEmailConfirmation;
+import com.stefanini.taskmanager.entity.Task;
 import com.stefanini.taskmanager.entity.User;
 import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
 
@@ -52,4 +52,13 @@ public interface UserService {
      * @return all the users from database
      */
     List<User> getAllUsers();
+
+    /**
+     * Adds an user with his tasks
+     *
+     * @param user - a <code>User</code> representing the user which will be added
+     * @param task - a <code>Task</code> representing the task which will be added for that specific user
+     */
+    void createAndAssign(User user, Task task);
+
 }

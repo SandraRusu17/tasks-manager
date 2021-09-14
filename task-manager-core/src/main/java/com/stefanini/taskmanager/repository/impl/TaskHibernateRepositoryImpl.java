@@ -1,6 +1,7 @@
 package com.stefanini.taskmanager.repository.impl;
 
 import com.stefanini.taskmanager.entity.Task;
+import com.stefanini.taskmanager.entity.User;
 import com.stefanini.taskmanager.repository.BaseRepository;
 import com.stefanini.taskmanager.repository.TaskRepository;
 import org.hibernate.HibernateException;
@@ -69,5 +70,6 @@ public class TaskHibernateRepositoryImpl<T, ID extends Serializable> extends Bas
     @Override
     public void saveTaskFor(Task task, String username) {
     }
+
 
 }

@@ -168,7 +168,8 @@ public class UserJDBCRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void update(User user) {}
+    public void update(User user) {
+    }
 
     @Override
     public void deleteUserById(Long id) {

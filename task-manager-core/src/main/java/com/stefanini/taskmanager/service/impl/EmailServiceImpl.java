@@ -7,11 +7,14 @@ import com.stefanini.taskmanager.service.EmailService;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 
 public class EmailServiceImpl implements EmailService {
-    public static final String FROM_EMAIL_ADDRESS = "com.stefanini.taskman@gmail.com";
     public static EmailServiceImpl INSTANCE;
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EmailServiceImpl.class);
@@ -23,13 +26,16 @@ public class EmailServiceImpl implements EmailService {
         return INSTANCE;
     }
 
+
     @Override
-    public void sendEmail(final Email email) {
-        Session session = Session.getInstance(getServerProperties(), getAuthenticator());
+    public void sendEmail(final Email email)  {
+        final Properties properties = getServerProperties();
+        Session session = Session.getInstance(properties, getAuthenticator(properties.getProperty("smtp.username"),
+                properties.getProperty("smtp.password")));
 
         try {
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(FROM_EMAIL_ADDRESS));
+            message.setFrom(new InternetAddress(properties.getProperty("smtp.username")));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email.getRecipient()));
             message.setSubject(email.getSubject());
             message.setContent(email.getContent(), "text/html");
@@ -41,9 +47,7 @@ public class EmailServiceImpl implements EmailService {
         }
     }
 
-    private Authenticator getAuthenticator() {
-        final String username = "com.stefanini.taskman@gmail.com";
-        final String password = "1qa2ws3ed4rf5tg";
+    protected Authenticator getAuthenticator(String username, String password) {
 
         return new Authenticator() {
             @Override
@@ -54,13 +58,17 @@ public class EmailServiceImpl implements EmailService {
     }
 
     private Properties getServerProperties() {
-        Properties props = new Properties();
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.socketFactory.port", "465");
-        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.port", "465");
-        return props;
+        Properties properties = new Properties();
+        try (InputStream ip = UserServiceImpl.class.getClassLoader().getResourceAsStream("email.properties")) {
+            properties.load(ip);
+
+        } catch (IOException e) {
+            log.trace("Oops, something went wrong during reading email.properties {}", e.getMessage());
+        }
+        return properties;
     }
+
+
+
 }
 
