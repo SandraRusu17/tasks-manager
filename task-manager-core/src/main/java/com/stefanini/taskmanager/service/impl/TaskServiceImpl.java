@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.stefanini.taskmanager.entity.Task;
 import com.stefanini.taskmanager.repository.TaskRepository;
-import com.stefanini.taskmanager.repository.impl.TaskHibernateRepositoryImpl;
 import com.stefanini.taskmanager.service.TaskService;
 
 
@@ -42,9 +41,9 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task deleteTaskByTitleFor(String taskTitle, String username) {
-        log.info("Entered deleteTaskByTitleFor with taskTitle = {} and username = {}", taskTitle, username);
-        taskRepository.deleteTaskByTitleFor(taskTitle, username);
+    public Task deleteTaskByTitle(String taskTitle) {
+        log.info("Entered deleteTaskByTitleFor with taskTitle = {}", taskTitle);
+        taskRepository.deleteTaskByTitle(taskTitle);
         return null;
     }
 

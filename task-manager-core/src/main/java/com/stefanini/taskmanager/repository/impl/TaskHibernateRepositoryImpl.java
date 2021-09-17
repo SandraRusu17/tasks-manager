@@ -4,11 +4,10 @@ import com.stefanini.taskmanager.entity.Task;
 import com.stefanini.taskmanager.entity.User;
 import com.stefanini.taskmanager.repository.BaseRepository;
 import com.stefanini.taskmanager.repository.TaskRepository;
-import org.hibernate.HibernateException;
 
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+import javax.persistence.criteria.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -43,28 +42,38 @@ public class TaskHibernateRepositoryImpl<T, ID extends Serializable> extends Bas
     }
 
     @Override
-    public void deleteTaskByTitleFor(String taskTitle, String username) {
-        final EntityTransaction t = beginTransaction();
+    public void deleteTaskByTitle(String taskTitle) {
+        final EntityTransaction transaction = beginTransaction();
         try {
-            final Query query = entityManager.createQuery(
-                    "DELETE FROM users_tasks t WHERE t.title = :title and t.id in (select t.id from Task t join t.users u where u.userName = :username)");
-            query.setParameter("username", username);
-            query.setParameter("title", taskTitle);
+            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+            CriteriaDelete<Task> deleteQuery = criteriaBuilder.createCriteriaDelete(Task.class);
+            Root<Task> rootTask = deleteQuery.from(Task.class);
+
+            deleteQuery.where(criteriaBuilder.equal(rootTask.get("title"), taskTitle));
+
+            Query query = entityManager.createQuery(deleteQuery);
             query.executeUpdate();
-            t.commit();
-        } catch (IllegalStateException | HibernateException e) {
-            t.rollback();
+            transaction.commit();
+        } catch (Exception e) {
+            transaction.rollback();
             log.info("Something bad happened during committing the transaction", e);
         }
-    }
 
+    }
 
     @Override
     public List<Task> getTasksFor(String username) {
-        final TypedQuery<Task> query = entityManager.createQuery(
-                "select t from Task t join t.users u where u.userName = :username", Task.class);
-        query.setParameter("username", username);
-        return query.getResultList();
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Task> queryTask = criteriaBuilder.createQuery(Task.class);
+        Root<Task> rootTask = queryTask.from(Task.class);
+
+        Join<Task, User> taskUserJoin = rootTask.join("users");
+
+        queryTask.select(rootTask)
+                .where(criteriaBuilder.equal(taskUserJoin.get("userName"), username));
+
+        return entityManager.createQuery(queryTask).getResultList();
     }
 
     @Override

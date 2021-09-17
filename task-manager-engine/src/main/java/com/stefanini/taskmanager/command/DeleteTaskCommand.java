@@ -21,8 +21,8 @@ public class DeleteTaskCommand implements Command {
 
 
     @Override
-    public void execute() throws UserNotFoundException, InvalidCommandException {
-        taskService.deleteTaskByTitleFor(taskTitle, username);
+    public void execute() throws UserNotFoundException {
+        taskService.deleteTaskByTitle(taskTitle);
         log.info("Task [" + taskTitle + "] deleted successfully");
     }
 }
