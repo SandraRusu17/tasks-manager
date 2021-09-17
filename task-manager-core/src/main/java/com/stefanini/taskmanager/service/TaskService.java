@@ -26,11 +26,9 @@ public interface TaskService {
      * Deletes tasks, by title, for the specified username
      *
      * @param taskTitle a <code>String</code> representing the title of the task which will be deleted
-     * @param username  a <code>String</code> representing the username given in order to get the tasks for
-     * @return
      * @throws UserNotFoundException when the user is not found, this exception is thrown
      */
-    Task deleteTaskByTitleFor(String taskTitle, String username) throws UserNotFoundException;
+    Task deleteTaskByTitle(String taskTitle) throws UserNotFoundException;
 
 
     /**

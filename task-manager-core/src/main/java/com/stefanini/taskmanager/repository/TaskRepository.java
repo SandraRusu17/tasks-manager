@@ -25,9 +25,8 @@ public interface TaskRepository {
      * Deletes tasks, by title, for the specified username
      *
      * @param taskTitle - a <code>String</code> representing the title of the task which will be deleted
-     * @param username  - a <code>String</code> representing the username given in order to get the tasks for
      */
-    void deleteTaskByTitleFor(String taskTitle, String username);
+    void deleteTaskByTitle(String taskTitle);
 
     /**
      * Finds tasks for the specified username

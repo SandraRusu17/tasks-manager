@@ -110,18 +110,17 @@ public class TaskJDBCRepositoryImpl implements TaskRepository {
     }
 
     @Override
-    public void deleteTaskByTitleFor(String taskTitle, String username) {
+    public void deleteTaskByTitle(String taskTitle) {
 
         try (Connection connection = DataSourceProvider.getMysqlConnection();
-             PreparedStatement ps1 = connection.prepareStatement("DELETE FROM tasks WHERE title = ? AND user_id in(select id from users where username = ?)")) {
+             PreparedStatement ps1 = connection.prepareStatement("DELETE FROM tasks WHERE title = ?)")) {
 
             ps1.setString(1, taskTitle);
-            ps1.setString(2, username);
             ps1.executeUpdate();
 
 
         } catch (SQLException e) {
-            log.error("Something bad happened during fetching a task with username = {} and title = {}", username, taskTitle, e);
+            log.error("Something bad happened during fetching a task with title = {}", taskTitle, e);
         }
     }
 }

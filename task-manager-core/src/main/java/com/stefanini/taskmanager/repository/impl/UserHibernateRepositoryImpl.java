@@ -1,13 +1,12 @@
 package com.stefanini.taskmanager.repository.impl;
 
-import com.stefanini.taskmanager.entity.Task;
 import com.stefanini.taskmanager.entity.User;
 import com.stefanini.taskmanager.repository.BaseRepository;
 import com.stefanini.taskmanager.repository.UserRepository;
-import org.hibernate.HibernateException;
 
-import javax.persistence.EntityTransaction;
-import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
@@ -36,13 +35,15 @@ public class UserHibernateRepositoryImpl<T, ID extends Serializable> extends Bas
 
     @Override
     public User findByUsername(final String username) {
-        final EntityTransaction t = beginTransaction();
-        final Query query = entityManager.createQuery(
-                "select u from " + type.getName() + " u where u.userName = :user_name");
-        query.setParameter("user_name", username);
-        final User user = (User) query.getSingleResult();
-        t.commit();
-        return user;
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> query = criteriaBuilder.createQuery(User.class);
+        Root<User> root = query.from(User.class);
+        query.select(root)
+                .where(criteriaBuilder.equal(root.get("userName"), username));
+
+        return entityManager.createQuery(query).getSingleResult();
+
     }
 
     @Override
