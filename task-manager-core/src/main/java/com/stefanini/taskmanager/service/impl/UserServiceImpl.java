@@ -6,8 +6,8 @@ import java.util.Optional;
 import com.stefanini.taskmanager.annotations.ActionEmailConfirmation;
 import com.stefanini.taskmanager.entity.Task;
 import com.stefanini.taskmanager.entity.User;
+import com.stefanini.taskmanager.repository.BaseRepository;
 import com.stefanini.taskmanager.repository.UserRepository;
-import com.stefanini.taskmanager.repository.impl.TaskHibernateRepositoryImpl;
 import com.stefanini.taskmanager.service.UserService;
 
 
@@ -15,6 +15,7 @@ public class UserServiceImpl implements UserService {
     public static UserServiceImpl INSTANCE;
 
     private final UserRepository userRepository;
+
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(UserServiceImpl.class);
 
@@ -70,4 +71,14 @@ public class UserServiceImpl implements UserService {
         user.addTask(task);
         userRepository.saveUser(user);
     }
+
+    @Override
+    public void assignDefaultTask() {
+        userRepository.streamAll().filter(u -> u.getTasks().isEmpty()).forEach(u -> {
+            u.addTask(new Task("To do", "Empty"));
+            userRepository.saveUser(u);
+        });
+    }
+
+
 }

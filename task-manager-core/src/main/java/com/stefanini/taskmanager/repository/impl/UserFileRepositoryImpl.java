@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import com.stefanini.taskmanager.entity.Task;
 import com.stefanini.taskmanager.entity.User;
@@ -93,6 +94,11 @@ public class UserFileRepositoryImpl implements UserRepository {
     @Override
     public void deleteUserById(final Long id) {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Stream<User> streamAll() {
+        return null;
     }
 
 }

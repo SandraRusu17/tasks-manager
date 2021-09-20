@@ -4,11 +4,7 @@ package com.stefanini.taskmanager;
 import com.stefanini.taskmanager.command.Command;
 import com.stefanini.taskmanager.command.CommandFactory;
 import com.stefanini.taskmanager.command.exceptions.InvalidCommandException;
-import com.stefanini.taskmanager.service.ServiceFactory;
-import com.stefanini.taskmanager.service.TaskService;
-import com.stefanini.taskmanager.service.UserService;
 import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
-import java.io.IOException;
 
 
 public class App {
