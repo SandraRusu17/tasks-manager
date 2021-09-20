@@ -13,9 +13,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 
-public abstract class BaseRepository<T, ID> implements AbstractRepository<T, ID> {
+public abstract class BaseRepository<T, ID> implements AbstractRepository<T, ID>{
 
     protected final EntityManager entityManager;
     protected final Class<T> type;
@@ -35,6 +36,16 @@ public abstract class BaseRepository<T, ID> implements AbstractRepository<T, ID>
             transaction.begin();
         }
         return transaction;
+    }
+
+    @Override
+    public Stream<T> streamAll() {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<T> criteriaQuery = builder.createQuery(type);
+        Root<T> root = criteriaQuery.from(type);
+        criteriaQuery.select(root);
+
+        return entityManager.createQuery(criteriaQuery).getResultList().stream();
     }
 
     @Override

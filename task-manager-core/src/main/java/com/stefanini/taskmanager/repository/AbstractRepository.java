@@ -2,6 +2,7 @@ package com.stefanini.taskmanager.repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public interface AbstractRepository<T, ID> {
     public List<T> findAll();
@@ -16,4 +17,5 @@ public interface AbstractRepository<T, ID> {
 
     void deleteById(T entity, ID id);
 
+    Stream<T> streamAll();
 }

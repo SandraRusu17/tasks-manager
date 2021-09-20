@@ -61,4 +61,9 @@ public interface UserService {
      */
     void createAndAssign(User user, Task task);
 
+    /**
+     * Assigns a default task for all users
+     */
+    void assignDefaultTask();
+
 }
