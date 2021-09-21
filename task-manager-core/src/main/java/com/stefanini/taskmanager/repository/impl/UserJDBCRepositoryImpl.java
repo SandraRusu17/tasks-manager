@@ -187,7 +187,7 @@ public class UserJDBCRepositoryImpl<T> implements UserRepository {
 
     @Override
     public Stream<User> streamAll() {
-        return null;
+        return Stream.empty();
     }
 
 }

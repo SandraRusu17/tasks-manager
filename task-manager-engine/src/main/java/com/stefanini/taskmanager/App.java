@@ -1,6 +1,5 @@
 package com.stefanini.taskmanager;
 
-
 import com.stefanini.taskmanager.command.Command;
 import com.stefanini.taskmanager.command.CommandFactory;
 import com.stefanini.taskmanager.command.exceptions.InvalidCommandException;
@@ -16,7 +15,7 @@ public class App {
         try {
             command.execute();
         } catch (InvalidCommandException | UserNotFoundException e) {
-            log.error("Something bad happened during entering command",e.getMessage());
+            log.error("Something bad happened during entering command");
             System.exit(0);
         }
 

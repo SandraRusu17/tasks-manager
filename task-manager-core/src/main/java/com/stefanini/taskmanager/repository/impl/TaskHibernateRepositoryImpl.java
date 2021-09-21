@@ -10,6 +10,7 @@ import javax.persistence.Query;
 import javax.persistence.criteria.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Stream;
 
 
 public class TaskHibernateRepositoryImpl<T, ID extends Serializable> extends BaseRepository<Task, Long> implements TaskRepository {
@@ -58,7 +59,6 @@ public class TaskHibernateRepositoryImpl<T, ID extends Serializable> extends Bas
             transaction.rollback();
             log.info("Something bad happened during committing the transaction", e);
         }
-
     }
 
     @Override
