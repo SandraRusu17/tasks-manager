@@ -4,7 +4,6 @@ import com.stefanini.taskmanager.command.AddTaskCommand;
 import com.stefanini.taskmanager.command.AddUserCommand;
 import com.stefanini.taskmanager.command.GetAllUsersCommand;
 import com.stefanini.taskmanager.command.GetTasksCommand;
-import com.stefanini.taskmanager.command.exceptions.InvalidCommandException;
 
 import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
@@ -15,15 +14,7 @@ import java.util.concurrent.Executors;
 public class App {
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(App.class);
 
-    public static void main(String[] args) throws InvalidCommandException {
-
-//        Command command = CommandFactory.parseCommandArguments(args);
-//        try {
-//            command.execute();
-//        } catch (InvalidCommandException | UserNotFoundException e) {
-//            log.error("Something bad happened during entering command");
-//            System.exit(0);
-//        }
+    public static void main(String[] args)  {
 
         final ExecutorService executor = Executors.newFixedThreadPool(4);
         Scanner scanner = new Scanner(System.in);
