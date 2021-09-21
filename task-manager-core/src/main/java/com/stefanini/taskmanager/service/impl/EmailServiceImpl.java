@@ -1,14 +1,11 @@
 package com.stefanini.taskmanager.service.impl;
 
 import com.stefanini.taskmanager.entity.Email;
-import com.stefanini.taskmanager.repository.impl.TaskHibernateRepositoryImpl;
 import com.stefanini.taskmanager.service.EmailService;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;

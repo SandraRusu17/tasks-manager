@@ -1,8 +1,6 @@
 package com.stefanini.taskmanager.repository;
 
 
-
-import com.stefanini.taskmanager.repository.impl.TaskHibernateRepositoryImpl;
 import org.hibernate.HibernateException;
 
 import javax.persistence.EntityManager;
