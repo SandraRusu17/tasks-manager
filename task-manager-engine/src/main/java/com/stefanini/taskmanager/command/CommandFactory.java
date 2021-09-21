@@ -63,4 +63,5 @@ public class CommandFactory {
                 throw new InvalidCommandException("Oops. Unknown command [" + arguments[0] + "] Please use one of the following commands: -createUser -showAllUsers -addTask");
         }
     }
+
 }

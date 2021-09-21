@@ -5,7 +5,6 @@ import com.stefanini.taskmanager.entity.User;
 import com.stefanini.taskmanager.repository.DataSourceProvider;
 import com.stefanini.taskmanager.repository.UserRepository;
 
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

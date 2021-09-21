@@ -1,10 +1,11 @@
 package com.stefanini.taskmanager.command;
 
+import com.stefanini.taskmanager.command.exceptions.InvalidCommandException;
 import com.stefanini.taskmanager.service.ServiceFactory;
 import com.stefanini.taskmanager.service.TaskService;
 import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
 
-public class AddTaskCommand implements Command {
+public class AddTaskCommand implements Command, Runnable {
 
     private String taskTitle;
     private String taskDescription;
@@ -23,10 +24,20 @@ public class AddTaskCommand implements Command {
 
 
     @Override
-    public void execute() throws UserNotFoundException {
+    public void execute() throws UserNotFoundException, InvalidCommandException {
 
         taskService.addTaskFor(taskTitle, taskDescription, username);
         log.info("Task [" + taskTitle + "] created successfully");
+    }
+
+    @Override
+    public void run() {
+        try {
+            execute();
+        } catch (InvalidCommandException | UserNotFoundException e) {
+            System.out.println("Something bad happened during adding tasks : " + e.getMessage());
+            log.trace(e.getMessage(), e);
+        }
     }
 }
 

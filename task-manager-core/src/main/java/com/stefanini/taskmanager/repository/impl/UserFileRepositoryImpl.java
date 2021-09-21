@@ -1,19 +1,14 @@
 package com.stefanini.taskmanager.repository.impl;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import com.stefanini.taskmanager.entity.User;
+import com.stefanini.taskmanager.repository.UserRepository;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Optional;
 import java.util.stream.Stream;
-
-import com.stefanini.taskmanager.entity.Task;
-import com.stefanini.taskmanager.entity.User;
-import com.stefanini.taskmanager.repository.UserRepository;
 
 public class UserFileRepositoryImpl implements UserRepository {
 

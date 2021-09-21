@@ -7,10 +7,10 @@ import com.stefanini.taskmanager.repository.TaskRepository;
 
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.io.Serializable;
 import java.util.List;
-import java.util.stream.Stream;
 
 
 public class TaskHibernateRepositoryImpl<T, ID extends Serializable> extends BaseRepository<Task, Long> implements TaskRepository {
@@ -77,7 +77,14 @@ public class TaskHibernateRepositoryImpl<T, ID extends Serializable> extends Bas
     }
 
     @Override
-    public void saveTaskFor(Task task, String username) {
+    public int saveTaskFor(Task task, String username) {
+        final TypedQuery<User> query = entityManager.createQuery(
+                "select u from User u where u.userName = :username", User.class);
+        query.setParameter("username", username);
+        final User user = query.getSingleResult();
+        task.addUser(user);
+        create(task);
+        return 0;
     }
 
 

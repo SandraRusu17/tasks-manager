@@ -1,14 +1,13 @@
 package com.stefanini.taskmanager.service.impl;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.stefanini.taskmanager.annotations.ActionEmailConfirmation;
 import com.stefanini.taskmanager.entity.Task;
 import com.stefanini.taskmanager.entity.User;
-import com.stefanini.taskmanager.repository.BaseRepository;
 import com.stefanini.taskmanager.repository.UserRepository;
 import com.stefanini.taskmanager.service.UserService;
+
+import java.util.List;
+import java.util.Optional;
 
 
 public class UserServiceImpl implements UserService {

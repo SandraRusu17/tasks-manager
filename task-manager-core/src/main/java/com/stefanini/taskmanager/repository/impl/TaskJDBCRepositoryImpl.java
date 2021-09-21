@@ -29,7 +29,7 @@ public class TaskJDBCRepositoryImpl implements TaskRepository {
     }
 
     @Override
-    public void saveTaskFor(Task task, String username) {
+    public int saveTaskFor(Task task, String username) {
 
         User user = null;
         try (Connection connection = DataSourceProvider.getMysqlConnection();
@@ -61,6 +61,7 @@ public class TaskJDBCRepositoryImpl implements TaskRepository {
         } catch (SQLException e) {
             log.error("Something bad happened during fetching a task with username = {}", username, e);
         }
+        return 0;
     }
 
     @Override

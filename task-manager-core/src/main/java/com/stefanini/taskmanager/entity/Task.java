@@ -81,7 +81,7 @@ public class Task implements Serializable {
         this.description = description;
     }
 
-    public Task(Set<User> users, Long id, String title, String description) {
+    public Task(Long id, String title, String description, Set<User> users) {
         this.users = users;
         this.id = id;
         this.title = title;

@@ -60,7 +60,7 @@ public class User implements Serializable {
         return id != null && Objects.equals(id, user.id);
     }
 
-    public User(Set<Task> tasks, Long id, String userName, String firstName, String lastName) {
+    public User(Long id, String firstName, String lastName, String userName, Set<Task> tasks) {
         this.tasks = tasks;
         this.id = id;
         this.userName = userName;
