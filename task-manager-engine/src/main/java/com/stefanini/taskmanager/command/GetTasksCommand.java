@@ -13,12 +13,13 @@ public class GetTasksCommand implements Command {
 
     private final TaskService taskService = ServiceFactory.getInstance().getTaskService();
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AddUserCommand.class);
+
+
     @Override
-    public void execute() throws UserNotFoundException{
+    public void execute() throws UserNotFoundException {
 
         System.out.println("All tasks for [" + username + "] :");
         taskService.getTasksFor(username).forEach(System.out::println);
     }
-
-
 }

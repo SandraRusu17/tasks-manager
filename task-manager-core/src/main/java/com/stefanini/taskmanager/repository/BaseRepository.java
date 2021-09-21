@@ -45,7 +45,7 @@ public abstract class BaseRepository<T, ID> implements AbstractRepository<T, ID>
         Root<T> root = criteriaQuery.from(type);
         criteriaQuery.select(root);
 
-        return entityManager.createQuery(criteriaQuery).getResultList().stream();
+        return entityManager.createQuery(criteriaQuery).getResultStream();
     }
 
     @Override

@@ -28,7 +28,7 @@ public interface TaskService {
      * @param taskTitle a <code>String</code> representing the title of the task which will be deleted
      * @throws UserNotFoundException when the user is not found, this exception is thrown
      */
-    Task deleteTaskByTitle(String taskTitle) throws UserNotFoundException;
+    void deleteTaskByTitle(String taskTitle) throws UserNotFoundException;
 
 
     /**
