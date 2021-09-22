@@ -14,7 +14,8 @@ import java.util.concurrent.Executors;
 public class App {
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(App.class);
 
-    public static void main(String[] args)  {
+    public static void main(String[] args) {
+
 
         final ExecutorService executor = Executors.newFixedThreadPool(4);
         Scanner scanner = new Scanner(System.in);
