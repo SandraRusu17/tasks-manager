@@ -7,7 +7,6 @@ import com.stefanini.taskmanager.repository.TaskRepository;
 
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.io.Serializable;
 import java.util.List;
@@ -78,14 +77,24 @@ public class TaskHibernateRepositoryImpl<T, ID extends Serializable> extends Bas
 
     @Override
     public int saveTaskFor(Task task, String username) {
-        final TypedQuery<User> query = entityManager.createQuery(
-                "select u from User u where u.userName = :username", User.class);
-        query.setParameter("username", username);
-        final User user = query.getSingleResult();
-        task.addUser(user);
-        create(task);
+        final EntityTransaction transaction = beginTransaction();
+        try {
+
+            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<User> query = criteriaBuilder.createQuery(User.class);
+            Root<User> root = query.from(User.class);
+            query.select(root)
+                    .where(criteriaBuilder.equal(root.get("userName"), username));
+
+            User user = entityManager.createQuery(query).getSingleResult();
+            user.addTask(task);
+            entityManager.persist(user);
+            transaction.commit();
+
+        } catch (Exception e) {
+            transaction.rollback();
+            log.info("Something bad happened during committing the transaction", e);
+        }
         return 0;
     }
-
-
 }

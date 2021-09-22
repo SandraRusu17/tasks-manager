@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public interface AbstractRepository<T, ID> {
-    public List<T> findAll();
+    List<T> findAll();
 
     Optional<T> getById(ID id);
 
