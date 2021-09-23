@@ -32,11 +32,6 @@ public class AddUserCommand implements Command, Runnable {
     @Override
     public void run(){
         try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        try {
             execute();
         } catch (InvalidCommandException e) {
             System.out.println("Something bad happened during adding a user : " + e.getMessage());
