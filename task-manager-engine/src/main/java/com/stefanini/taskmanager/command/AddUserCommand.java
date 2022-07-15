@@ -4,15 +4,14 @@ import com.stefanini.taskmanager.command.exceptions.InvalidCommandException;
 import com.stefanini.taskmanager.entity.User;
 import com.stefanini.taskmanager.service.ServiceFactory;
 import com.stefanini.taskmanager.service.UserService;
-import lombok.extern.slf4j.Slf4j;
 
-
-@Slf4j
-public class AddUserCommand implements Command {
+public class AddUserCommand implements Command, Runnable {
 
     private String username;
     private String firstName;
     private String lastName;
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AddUserCommand.class);
 
     private UserService userService = ServiceFactory.getInstance().getUserService();
 
@@ -24,9 +23,19 @@ public class AddUserCommand implements Command {
 
 
     @Override
-    public void execute() throws InvalidCommandException {
+    public void execute() throws InvalidCommandException{
         final User user = new User(username, firstName, lastName);
         userService.saveUser(user);
         log.info(user + "created successfully");
+    }
+
+    @Override
+    public void run(){
+        try {
+            execute();
+        } catch (InvalidCommandException e) {
+            System.out.println("Something bad happened during adding a user : " + e.getMessage());
+            log.trace(e.getMessage(), e);
+        }
     }
 }

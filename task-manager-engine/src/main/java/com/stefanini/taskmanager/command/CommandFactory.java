@@ -1,11 +1,10 @@
 package com.stefanini.taskmanager.command;
 
 import com.stefanini.taskmanager.command.exceptions.InvalidCommandException;
-import lombok.extern.slf4j.Slf4j;
 
 import static com.stefanini.taskmanager.utils.CommandParameterParser.*;
 
-@Slf4j
+
 public class CommandFactory {
 
     //    -createUser -fn='FirstName' -ln='LastName' -un='UserName'
@@ -21,11 +20,10 @@ public class CommandFactory {
 
     public static final int COMMAND = 0;
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CommandFactory.class);
+
 
     public static Command parseCommandArguments(String[] arguments) throws InvalidCommandException {
-//        String joinedArguments = String.join(" ", arguments); //so we can have parameter values with spaces
-//        String[] commandAndParameters = joinedArguments.split(" -"); //split by ' -' again so we have the command and its parameters
-//        final String command = arguments[COMMAND];
 
         switch (arguments[0]) {
             case CREATE_USER_COMMAND:
@@ -65,4 +63,5 @@ public class CommandFactory {
                 throw new InvalidCommandException("Oops. Unknown command [" + arguments[0] + "] Please use one of the following commands: -createUser -showAllUsers -addTask");
         }
     }
+
 }

@@ -5,7 +5,7 @@ import com.stefanini.taskmanager.service.ServiceFactory;
 import com.stefanini.taskmanager.service.TaskService;
 import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
 
-public class GetTasksCommand implements Command {
+public class GetTasksCommand implements Command, Runnable {
     private String username;
 
     public GetTasksCommand(String username) {
@@ -14,6 +14,9 @@ public class GetTasksCommand implements Command {
 
     private final TaskService taskService = ServiceFactory.getInstance().getTaskService();
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AddUserCommand.class);
+
+
     @Override
     public void execute() throws UserNotFoundException, InvalidCommandException {
 
@@ -21,5 +24,13 @@ public class GetTasksCommand implements Command {
         taskService.getTasksFor(username).forEach(System.out::println);
     }
 
-
+    @Override
+    public void run() {
+        try {
+            execute();
+        } catch (InvalidCommandException | UserNotFoundException e) {
+            System.out.println("Something bad happened during getting tasks : " + e.getMessage());
+            log.trace(e.getMessage(), e);
+        }
+    }
 }

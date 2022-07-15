@@ -1,29 +1,26 @@
 package com.stefanini.taskmanager.repository.impl;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import com.stefanini.taskmanager.entity.User;
+import com.stefanini.taskmanager.repository.UserRepository;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Optional;
+import java.util.stream.Stream;
 
-import com.stefanini.taskmanager.entity.User;
-import com.stefanini.taskmanager.repository.UserRepository;
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 public class UserFileRepositoryImpl implements UserRepository {
 
     public static UserFileRepositoryImpl INSTANCE;
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(UserFileRepositoryImpl.class);
 
     private UserFileRepositoryImpl() {
     }
 
     public static UserFileRepositoryImpl getInstance() {
-        if(INSTANCE == null) {
+        if (INSTANCE == null) {
             INSTANCE = new UserFileRepositoryImpl();
         }
 
@@ -33,7 +30,7 @@ public class UserFileRepositoryImpl implements UserRepository {
     public static final String FILE_LOCATION = "taskmanager.ser";
 
     @Override
-    public int saveUser(final User user) {
+    public void saveUser(final User user) {
         try (
                 FileOutputStream fout = new FileOutputStream(FILE_LOCATION);
                 ObjectOutputStream oos = new ObjectOutputStream(fout)
@@ -43,19 +40,21 @@ public class UserFileRepositoryImpl implements UserRepository {
             oos.writeObject(users);
         } catch (IOException e) {
             log.error("Something bad happened during fetching user = {} ", user, e);
-            return 0;
         }
-        return 1;
     }
 
     @Override
-    public Optional<User> findByUsername(final String username) {
-        return findAllUsers()
-                .stream()
-                .filter(u -> u.getUserName().equals(username)).findFirst();
+    public User findByUsername(String username) {
+        return null;
     }
 
-    @SuppressWarnings("unchecked")
+
+    @Override
+    public Optional<User> findById(Long id) {
+        return Optional.empty();
+    }
+
+
     @Override
     public List<User> findAllUsers() {
         try (
@@ -76,8 +75,8 @@ public class UserFileRepositoryImpl implements UserRepository {
                 ObjectOutputStream oos = new ObjectOutputStream(fout)
         ) {
             ListIterator<User> iterator = users.listIterator();
-            while (iterator.hasNext()){
-                if(iterator.next().getUserName().equals(user.getUserName())){
+            while (iterator.hasNext()) {
+                if (iterator.next().getUserName().equals(user.getUserName())) {
                     iterator.set(user);
                 }
             }
@@ -88,7 +87,13 @@ public class UserFileRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public int deleteUserById(final Long id) {
+    public void deleteUserById(final Long id) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public Stream<User> streamAll() {
+        return null;
+    }
+
 }

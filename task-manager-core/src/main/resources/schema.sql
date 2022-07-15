@@ -12,7 +12,7 @@ CREATE TABLE `taskmanager`.`users` (
  -- Table `taskmanager`.`tasks`
  -- -----------------------------------------------------
 CREATE TABLE tasks(
-    id INT NOT NULL AUTO_INCREMENT,
+    task_id INT NOT NULL AUTO_INCREMENT,
     title VARCHAR(256) NOT NULL,
     description VARCHAR(256) NOT NULL,
     user_id int,

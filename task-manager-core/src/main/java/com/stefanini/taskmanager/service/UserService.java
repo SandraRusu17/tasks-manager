@@ -9,31 +9,41 @@ import com.stefanini.taskmanager.service.exceptions.UserNotFoundException;
 
 public interface UserService {
 
+
     /**
      * Saves a user in database
      *
      * @param user - a <code>User</code>  representing the user with firstName, lastName and username
      * @return the saved user
      */
-    int saveUser(User user);
+
+    void saveUser(User user);
 
     /**
      * Returns a user, by his username
      *
-     * @param username  - a <code>String</code> representing the username given in order to find the user
+     * @param username - a <code>String</code> representing the username given in order to find the user
      * @return the user, with his id, firstName, lastName and userName
      */
-    Optional<User> findByUsername(String username);
+    User findByUsername(String username) throws UserNotFoundException;
+
+
+    /**
+     * Returns a user, by his username
+     *
+     * @param id - a <code>Long</code> representing the id given in order to find the user
+     * @return the user, with his id, firstName, lastName and userName
+     */
+    Optional<User> getById(Long id) throws UserNotFoundException;
 
 
     /**
      * Deletes an user by his id
      *
-     * @param id - a <code>Long</code> representing the user's id
+     * @param id- a <code>Long</code> representing the user's id
      * @return int the operation is executed
      */
-    //one more logical feature
-    int deleteUserById(Long id) throws UserNotFoundException;
+    void deleteUserById(Long id) throws UserNotFoundException;
 
 
     /**
@@ -42,4 +52,18 @@ public interface UserService {
      * @return all the users from database
      */
     List<User> getAllUsers();
+
+    /**
+     * Adds an user with his tasks
+     *
+     * @param user - a <code>User</code> representing the user which will be added
+     * @param task - a <code>Task</code> representing the task which will be added for that specific user
+     */
+    void createAndAssign(User user, Task task);
+
+    /**
+     * Assigns a default task for all users
+     */
+    void assignDefaultTask();
+
 }

@@ -1,9 +1,10 @@
 package com.stefanini.taskmanager.service;
 
-
 import com.stefanini.taskmanager.repository.RepositoryFactory;
+import com.stefanini.taskmanager.service.impl.EmailServiceImpl;
 import com.stefanini.taskmanager.service.impl.TaskServiceImpl;
 import com.stefanini.taskmanager.service.impl.UserServiceImpl;
+
 
 public class ServiceFactory {
     private static ServiceFactory INSTANCE;
@@ -20,7 +21,12 @@ public class ServiceFactory {
     }
 
     public UserService getUserService() {
-        return UserServiceImpl.getInstance(RepositoryFactory.getInstance().getUserRepository());
+        return UserServiceImpl.getInstance(
+                RepositoryFactory.getInstance().getUserRepository());
+    }
+
+    public EmailService getEmailService() {
+        return EmailServiceImpl.getInstance();
     }
 
     public TaskService getTaskService() {
